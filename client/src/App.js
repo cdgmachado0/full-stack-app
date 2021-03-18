@@ -1,13 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
+import url from './baseUrl';
 
 
 function App() {
-  fetch('http://localhost:5000/api/courses')
+  fetch(`${url}/courses`)
     .then(res => res.json())
-    .then(courses => console.log(courses))
-    .catch(err => console.log(err));
+    .then(courses => console.log(courses));
   return (
+
+    //here is where all the routes will be
+
+
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
