@@ -1,7 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 
+
 function App() {
+  fetch('http://localhost:5000/api/courses')
+    .then(res => res.json())
+    .then(courses => console.log(courses))
+    .catch(err => console.log(err));
   return (
     <div className="App">
       <header className="App-header">
