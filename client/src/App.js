@@ -1,33 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
-import url from './baseUrl';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+} from 'react-router-dom';
+
+import Courses from './components/Courses';
 
 
 function App() {
-  fetch(`${url}/courses`)
-    .then(res => res.json())
-    .then(courses => console.log(courses));
   return (
 
     //here is where all the routes will be
-
-
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Route path='/' component={Courses}/>
+    </Router>
+    
+   
   );
 }
 
