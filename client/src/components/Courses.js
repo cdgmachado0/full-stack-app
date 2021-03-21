@@ -17,8 +17,15 @@ function Courses() {
             .then(data => setCourses(data.courses));
     }, [actions]);
 
-    
-console.log(courses)
+    const renderCourses = () => {
+        return courses.map((course, index) => (
+            <CourseTemplate 
+                name={course.title}
+                key={index}
+            />
+        ));
+    }
+
     return (
         <React.Fragment>
             <header>
@@ -34,10 +41,7 @@ console.log(courses)
             </header>
             <main>
                 <div className="wrap main--grid">
-                    
-                    <CourseTemplate />
-                    <CourseTemplate />
-                    <CourseTemplate />
+                    {courses.length ? renderCourses() : null}
                     <a className="course--module course--add--module" href="create-course.html">
                         <span className="course--add--title">
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
