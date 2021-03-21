@@ -13,9 +13,17 @@ export function Provider(props) {
             .catch(err => console.log(err));
     }
 
+    const getCourseDetails = async (url) => {
+        return await fetch(url)
+            .then(res => res.json())
+            .then(data => data)
+            .catch(err => console.log(err));
+    }
+
     const value = {
         actions: {
            getCourses,
+           getCourseDetails
         }
     };
 

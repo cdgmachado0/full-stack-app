@@ -2,9 +2,11 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
+  Switch
 } from 'react-router-dom';
 
 import Courses from './components/Courses';
+import CourseDetails from './components/CourseDetails';
 
 
 function App() {
@@ -12,7 +14,10 @@ function App() {
 
     //here is where all the routes will be
     <Router>
-      <Route path='/' component={Courses}/>
+      <Switch>
+        <Route exact path='/' component={Courses}/>
+        <Route path='/courses/:id' component={CourseDetails} />
+      </Switch>
     </Router>
     
    

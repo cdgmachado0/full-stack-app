@@ -11,7 +11,6 @@ function Courses() {
     const { actions } = useContext(Context);
     const [ courses, setCourses ] = useState([]);
     
-
     useEffect(() => {
         actions.getCourses()
             .then(data => setCourses(data.courses));
@@ -21,6 +20,7 @@ function Courses() {
         return courses.map((course, index) => (
             <CourseTemplate 
                 name={course.title}
+                id={course.id}
                 key={index}
             />
         ));
