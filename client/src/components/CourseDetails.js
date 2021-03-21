@@ -60,21 +60,6 @@ function CourseDetails(props) {
                                 <MaterialsNeeded materials={course.materialsNeeded} /> :
                                     null
                             }
-                            
-
-                            {/* <h3 className="course--detail--title">Materials Needed</h3>
-                            <ul className="course--detail--list">
-                                <li>1/2 x 3/4 inch parting strip</li>
-                                <li>1 x 2 common pine</li>
-                                <li>1 x 4 common pine</li>
-                                <li>1 x 10 common pine</li>
-                                <li>1/4 inch thick lauan plywood</li>
-                                <li>Finishing Nails</li>
-                                <li>Sandpaper</li>
-                                <li>Wood Glue</li>
-                                <li>Wood Filler</li>
-                                <li>Minwax Oil Based Polyurethane</li>
-                            </ul> */}
                         </div>
                     </div>
                 </form>
@@ -94,11 +79,18 @@ function EstimatedTime(props) {
 }
 
 function MaterialsNeeded(props) {
+    const { materials } = props;
+    let arrMaterials = materials.split('*');
+    if (arrMaterials[0] === '') {
+        arrMaterials.shift()
+    }
+    const createList = () => arrMaterials.map((material, index) => <li key={index}>{material}</li>);
+
     return (
         <React.Fragment>
             <h3 className="course--detail--title">Materials Needed</h3>
             <ul className="course--detail--list">
-                <li>{props.materials}</li>
+                {createList()}
             </ul>
         </React.Fragment>
     );
