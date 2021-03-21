@@ -1,4 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { 
+    useContext, 
+    useState, 
+    useEffect 
+} from 'react';
 import { Context } from '../Context';
 
 import CourseTemplate from './CourseTemplate';
@@ -10,14 +14,11 @@ function Courses() {
 
     useEffect(() => {
         actions.getCourses()
-            // .then(res => console.log(res))
-            .then(() => setCourses([1,2,5,3]))
-            .then(() => console.log(courses))
-            .catch(err => console.log(err));
-    },[]);
+            .then(data => setCourses(data.courses));
+    }, [actions]);
 
-    //trying to update 'courses' just once uisng useEffect
-
+    
+console.log(courses)
     return (
         <React.Fragment>
             <header>
@@ -33,7 +34,7 @@ function Courses() {
             </header>
             <main>
                 <div className="wrap main--grid">
-                    {/* {courses.map(course => console.log(course))} */}
+                    
                     <CourseTemplate />
                     <CourseTemplate />
                     <CourseTemplate />
