@@ -16,7 +16,7 @@ function CourseDetails(props) {
         actions.getCourseDetails(fullUrl)
             .then(data => setDetails(data.course))
     }, [actions, props.match.url]);
-
+    
     return(
         <React.Fragment>
             <header>
@@ -33,7 +33,7 @@ function CourseDetails(props) {
         <main>
             <div className="actions--bar">
                 <div className="wrap">
-                    <a className="button" href="update-course.html">Update Course</a>
+                    <a className="button" href={`/update/${course.id}`}>Update Course</a>
                     <a className="button" href="/">Delete Course</a>
                     <a className="button button-secondary" href="index.html">Return to List</a>
                 </div>
@@ -46,7 +46,7 @@ function CourseDetails(props) {
                         <div>
                             <h3 className="course--detail--title">Course</h3>
                             <h4 className="course--name">{course.title}</h4>
-                            <p>By {course.Student ? `${course.Student.firstName} ${course.Student.lastName}` : null }</p>
+                            <p>By { course.Student ? `${course.Student.firstName} ${course.Student.lastName}` : null }</p>
 
                             <p>{course.description}</p>
                             

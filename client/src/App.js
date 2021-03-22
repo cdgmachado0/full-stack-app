@@ -7,6 +7,7 @@ import {
 
 import Courses from './components/Courses';
 import CourseDetails from './components/CourseDetails';
+import UpdateCourse from './components/UpdateCourse';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <Switch>
         <Route exact path='/' component={Courses}/>
         <Route path='/courses/:id' component={CourseDetails} />
+        <Route path='/update/:id' component={UpdateCourse} />
       </Switch>
     </Router>
     
