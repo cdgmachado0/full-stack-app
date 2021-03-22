@@ -3,19 +3,28 @@ import React, {
     useContext,
     useState
 } from 'react';
+// import { useHistory } from 'react-router-dom';
 import { Context } from '../Context';
 import url from '../baseUrl';
-import Courses from './Courses';
+
 
 function UpdateCourse(props) {
     const { actions } = useContext(Context);
     const [ course, setDetails ] = useState({});
+    const { id } = props.match.params;
+    // let history = useHistory();
 
     useEffect(() => {
-        const fullUrl = url + props.match.url;
+        const fullUrl = url + '/courses/' + id;
         actions.getCourseDetails(fullUrl)
-            .then(data => setDetails(data.course))
-    }, [actions, props.match.url]);
+            .then(data => setDetails(data.course));
+    }, [actions, id]);
+
+    const backToDetails = (e) => {
+        e.preventDefault();
+        window.location.href = `/courses/${id}`;
+    }
+
 
     return (
         <React.Fragment>
@@ -37,30 +46,29 @@ function UpdateCourse(props) {
                     <div className="main--flex">
                         <div>
                             <label htmlFor="courseTitle">Course Title</label>
-                            <input id="courseTitle" name="courseTitle" type="text" value={course.title} />
+                            <input id="courseTitle" name="courseTitle" type="text" defaultValue={course.title} />
 
                             <label htmlFor="courseAuthor">Course Author</label>
-                            <input id="courseAuthor" name="courseAuthor" type="text" value={course.Student ? `${course.Student.firstName} ${course.Student.lastName}` : null} />
+                            <input id="courseAuthor" name="courseAuthor" type="text" defaultValue={course.Student ? `${course.Student.firstName} ${course.Student.lastName}` : ''} />
 
                             <label htmlFor="courseDescription">Course Description</label>
-                            <textarea id="courseDescription" name="courseDescription" />{course.description}
+                            <textarea id="courseDescription" name="courseDescription" defaultValue={course.description} />
                         </div>
                         <div>
                             {course.estimatedTime ?
                                 <EstimatedTime estimated={course.estimatedTime} /> :
-                                    null
+                                    ''
                             }
                             {course.materialsNeeded ?
                                 <MaterialsNeeded materials={course.materialsNeeded} /> :
-                                    null
+                                    ''
                             }
                             
 
-                            <label htmlFor="materialsNeeded">Materials Needed</label>
-                            <textarea id="materialsNeeded" name="materialsNeeded">{}</textarea>
+                            
                         </div>
                     </div>
-                    <button className="button" type="submit">Update Course</button><button className="button button-secondary" onClick="event.preventDefault(); location.href='index.html';">Cancel</button>
+                    <button className="button" type="submit">Update Course</button><button className="button button-secondary" onClick={(e) => backToDetails(e)}>Cancel</button>
                 </form>
             </div>
         </main>
@@ -72,26 +80,20 @@ function EstimatedTime(props) {
     return (
         <React.Fragment>
             <label htmlFor="estimatedTime">Estimated Time</label>
-            <input id="estimatedTime" name="estimatedTime" type="text" value={props.estimated} />
+            <input id="estimatedTime" name="estimatedTime" type="text" defaultValue={props.estimated} />
         </React.Fragment>
     );
 }
 
 function MaterialsNeeded(props) {
-    const { materials } = props;
-    let arrMaterials = materials.split('*');
-    if (arrMaterials[0] === '') {
-        arrMaterials.shift()
-    }
-    const createList = () => arrMaterials.map((material, index) => <li key={index}>{material}</li>);
-
     return (
         <React.Fragment>
             <label htmlFor="materialsNeeded">Materials Needed</label>
-            <textarea id="materialsNeeded" name="materialsNeeded">{}</textarea>
+            <textarea id="materialsNeeded" name="materialsNeeded" defaultValue={props.materials} />
         </React.Fragment>
     );
-} //finishing up with this component 
+} 
 
+// "event.preventDefault(); location.href='index.html';"
 
 export default UpdateCourse;
