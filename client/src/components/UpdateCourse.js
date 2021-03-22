@@ -3,7 +3,6 @@ import React, {
     useContext,
     useState
 } from 'react';
-// import { useHistory } from 'react-router-dom';
 import { Context } from '../Context';
 import url from '../baseUrl';
 
@@ -12,16 +11,27 @@ function UpdateCourse(props) {
     const { actions } = useContext(Context);
     const [ course, setDetails ] = useState({});
     const { id } = props.match.params;
-    // let history = useHistory();
+    const fullUrl = url + '/courses/' + id;
 
     useEffect(() => {
-        const fullUrl = url + '/courses/' + id;
         actions.getCourseDetails(fullUrl)
             .then(data => setDetails(data.course));
-    }, [actions, id]);
+    }, [actions, fullUrl]);
 
     const backToDetails = (e) => {
         e.preventDefault();
+        window.location.href = `/courses/${id}`;
+    }
+
+    const updateDetails = async (e, id) => {
+        e.preventDefault();
+        const formData = new FormData(e.target.parentNode); 
+        const body = {};
+
+        for (let pair of formData.entries()) {
+            body[pair[0]] = pair[1];
+        }
+        await actions.updateCourse(body, id);
         window.location.href = `/courses/${id}`;
     }
 
@@ -46,13 +56,13 @@ function UpdateCourse(props) {
                     <div className="main--flex">
                         <div>
                             <label htmlFor="courseTitle">Course Title</label>
-                            <input id="courseTitle" name="courseTitle" type="text" defaultValue={course.title} />
+                            <input id="courseTitle" name="title" type="text" defaultValue={course.title} />
 
                             <label htmlFor="courseAuthor">Course Author</label>
                             <input id="courseAuthor" name="courseAuthor" type="text" defaultValue={course.Student ? `${course.Student.firstName} ${course.Student.lastName}` : ''} />
 
                             <label htmlFor="courseDescription">Course Description</label>
-                            <textarea id="courseDescription" name="courseDescription" defaultValue={course.description} />
+                            <textarea id="courseDescription" name="description" defaultValue={course.description} />
                         </div>
                         <div>
                             {course.estimatedTime ?
@@ -62,13 +72,10 @@ function UpdateCourse(props) {
                             {course.materialsNeeded ?
                                 <MaterialsNeeded materials={course.materialsNeeded} /> :
                                     ''
-                            }
-                            
-
-                            
+                            } 
                         </div>
                     </div>
-                    <button className="button" type="submit">Update Course</button><button className="button button-secondary" onClick={(e) => backToDetails(e)}>Cancel</button>
+                    <button className="button" type="submit" onClick={(e) => updateDetails(e, id)}>Update Course</button><button className="button button-secondary" onClick={(e) => backToDetails(e)}>Cancel</button>
                 </form>
             </div>
         </main>
@@ -94,6 +101,6 @@ function MaterialsNeeded(props) {
     );
 } 
 
-// "event.preventDefault(); location.href='index.html';"
+
 
 export default UpdateCourse;
