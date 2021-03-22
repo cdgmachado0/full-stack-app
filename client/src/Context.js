@@ -20,16 +20,15 @@ export function Provider(props) {
             .catch(err => console.log(err));
     }
 
-    const updateCourse = async (form, id) => {
+    const updateCourse = (body, id) => {
         const options = {
             method: 'PUT',
+            body,
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
             }
         }
-        console.log(form);
-        options.body = JSON.stringify(form);
-        await fetch(`${url}/courses/${id}`, options);
+        fetch(`${url}/courses/${id}`, options);
     }
 
     const value = {

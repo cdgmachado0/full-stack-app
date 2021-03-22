@@ -31,7 +31,7 @@ function UpdateCourse(props) {
         for (let pair of formData.entries()) {
             body[pair[0]] = pair[1];
         }
-        await actions.updateCourse(body, id);
+        await actions.updateCourse(JSON.stringify(body), id);
         window.location.href = `/courses/${id}`;
     }
 
