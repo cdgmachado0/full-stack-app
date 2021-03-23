@@ -9,5 +9,7 @@ function CourseTemplate(props) {
     );
 }
 
+//move to the component where it's called
+
 
 export default CourseTemplate;

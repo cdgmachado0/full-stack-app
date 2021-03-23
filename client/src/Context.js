@@ -31,11 +31,24 @@ export function Provider(props) {
         fetch(`${url}/courses/${id}`, options);
     }
 
+    const getFormData = e => {
+        e.preventDefault();
+        const formData = new FormData(e.target.parentNode); 
+        const body = {};
+    
+        for (let pair of formData.entries()) {
+            body[pair[0]] = pair[1];
+        }
+    
+        return body;
+    }
+
     const value = {
         actions: {
            getCourses,
            getCourseDetails,
-           updateCourse
+           updateCourse,
+           getFormData
         }
     };
 
@@ -46,5 +59,6 @@ export function Provider(props) {
     );
     
 }
+
 
 

@@ -24,13 +24,7 @@ function UpdateCourse(props) {
     }
 
     const updateDetails = async (e, id) => {
-        e.preventDefault();
-        const formData = new FormData(e.target.parentNode); 
-        const body = {};
-
-        for (let pair of formData.entries()) {
-            body[pair[0]] = pair[1];
-        }
+        const body = actions.getFormData(e);
         await actions.updateCourse(JSON.stringify(body), id);
         window.location.href = `/courses/${id}`;
     }
