@@ -12,16 +12,12 @@ function UpdateCourse(props) {
     const [ course, setDetails ] = useState({});
     const { id } = props.match.params;
     const fullUrl = url + '/courses/' + id;
+    const path = `/courses/${id}`;
 
     useEffect(() => {
         actions.getCourseDetails(fullUrl)
             .then(data => setDetails(data.course));
     }, [actions, fullUrl]);
-
-    const backToDetails = (e) => {
-        e.preventDefault();
-        window.location.href = `/courses/${id}`;
-    }
 
     const updateDetails = async (e, id) => {
         const body = actions.getFormData(e);
@@ -69,7 +65,7 @@ function UpdateCourse(props) {
                             } 
                         </div>
                     </div>
-                    <button className="button" type="submit" onClick={(e) => updateDetails(e, id)}>Update Course</button><button className="button button-secondary" onClick={(e) => backToDetails(e)}>Cancel</button>
+                    <button className="button" type="submit" onClick={(e) => updateDetails(e, id)}>Update Course</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, path)}>Cancel</button>
                 </form>
             </div>
         </main>

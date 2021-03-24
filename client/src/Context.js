@@ -27,8 +27,19 @@ export function Provider(props) {
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
             }
-        }
+        };
         fetch(`${url}/courses/${id}`, options);
+    }
+
+    const createCourse = (body) => {
+        const options = {
+            method: 'POST',
+            body,
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            }
+        };
+        return fetch(`${url}/courses`, options);
     }
 
     const getFormData = e => {
@@ -39,8 +50,12 @@ export function Provider(props) {
         for (let pair of formData.entries()) {
             body[pair[0]] = pair[1];
         }
-    
         return body;
+    }
+
+    const goBack = (e, path) => {
+        e.preventDefault();
+        window.location.href = path;
     }
 
     const value = {
@@ -48,7 +63,9 @@ export function Provider(props) {
            getCourses,
            getCourseDetails,
            updateCourse,
-           getFormData
+           getFormData,
+           goBack,
+           createCourse
         }
     };
 
