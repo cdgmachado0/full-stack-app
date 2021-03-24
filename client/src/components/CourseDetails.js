@@ -3,6 +3,7 @@ import React, {
     useContext,
     useState
 } from 'react';
+import { Link } from 'react-router-dom';
 import { Context } from '../Context';
 import url from '../baseUrl';
 
@@ -42,9 +43,9 @@ function CourseDetails(props) {
         <main>
             <div className="actions--bar">
                 <div className="wrap">
-                    <a className="button" href={`/update/${course.id}`}>Update Course</a>
+                    <Link to={`/update/${course.id}`} className="button">Update Course</Link>
                     <button className="button" onClick={confirmDeletion}>Delete Course</button>
-                    <a className="button button-secondary" href="/">Return to List</a>
+                    <Link to='/' className="button button-secondary">Return to List</Link>
                 </div>
             </div>
             
