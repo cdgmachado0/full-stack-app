@@ -6,6 +6,7 @@ import React, {
 import { Context } from '../Context';
 
 import CourseTemplate from './CourseTemplate';
+import Header from './Header';
 
 function Courses() {
     const { actions } = useContext(Context);
@@ -28,17 +29,7 @@ function Courses() {
 
     return (
         <React.Fragment>
-            <header>
-                <div className="wrap header--flex">
-                    <h1 className="header--logo"><a href="index.html">Courses</a></h1>
-                    <nav>
-                        <ul className="header--signedout">
-                            <li><a href="sign-up.html">Sign Up</a></li>
-                            <li><a href="sign-in.html">Sign In</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </header>
+            <Header />
             <main>
                 <div className="wrap main--grid">
                     {courses.length ? renderCourses() : null}
@@ -57,3 +48,17 @@ function Courses() {
 }
 
 export default Courses;
+
+
+
+{/* <header>
+    <div className="wrap header--flex">
+        <h1 className="header--logo"><a href="index.html">Courses</a></h1>
+        <nav>
+            <ul className="header--signedout">
+                <li><a href="sign-up.html">Sign Up</a></li>
+                <li><a href="sign-in.html">Sign In</a></li>
+            </ul>
+        </nav>
+    </div>
+</header> */}

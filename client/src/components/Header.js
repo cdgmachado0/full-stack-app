@@ -1,0 +1,23 @@
+import React from 'react';
+
+
+function Header() {
+    return (
+        <React.Fragment>
+            <header>
+                <div className="wrap header--flex">
+                    <h1 className="header--logo"><a href="index.html">Courses</a></h1>
+                    <nav>
+                        <ul className="header--signedin">
+                            <li>Welcome, Joe Smith!</li>
+                            <li><a href="sign-out.html">Sign Out</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+        </React.Fragment>
+    );
+}
+
+
+export default Header;
