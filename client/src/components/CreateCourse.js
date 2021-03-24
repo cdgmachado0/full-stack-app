@@ -13,8 +13,13 @@ function CreateCourse() {
         const body = actions.getFormData(e);
         actions.createCourse(JSON.stringify(body))
             .then(res => res.json())
-            .then(data => setErrors(data.errors));
-        window.location.href = '/';
+            .then(data => {
+                if (data.errors) {
+                    setErrors(data.errors)
+                } else {
+                    window.location.href = '/';
+                }
+            });
     }
 
     return (
@@ -84,3 +89,5 @@ export default CreateCourse;
 //Code a way to associate a name with an user ID fro mthe table.
 //If the new author to be created doesn't have an id, create a new entry
 //and assign him an ID
+
+//make the course author by default the person that logs in, so they can't change it
