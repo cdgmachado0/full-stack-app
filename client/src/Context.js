@@ -42,6 +42,16 @@ export function Provider(props) {
         return fetch(`${url}/courses`, options);
     }
 
+    const deleteCourse = id => {
+        const options = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        }
+        fetch(`${url}/courses/${id}`, options);
+    }
+
     const getFormData = e => {
         e.preventDefault();
         const formData = new FormData(e.target.parentNode); 
@@ -65,7 +75,8 @@ export function Provider(props) {
            updateCourse,
            getFormData,
            goBack,
-           createCourse
+           createCourse,
+           deleteCourse
         }
     };
 

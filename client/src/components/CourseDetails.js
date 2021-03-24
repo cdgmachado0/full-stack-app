@@ -10,12 +10,21 @@ import url from '../baseUrl';
 function CourseDetails(props) {
     const { actions } = useContext(Context);
     const [ course, setDetails ] = useState({});
+    const fullUrl = url + props.match.url;
+    const { id } = props.match.params;
 
     useEffect(() => {
-        const fullUrl = url + props.match.url;
         actions.getCourseDetails(fullUrl)
             .then(data => setDetails(data.course))
-    }, [actions, props.match.url]);
+    }, [actions, fullUrl]);
+
+    const confirmDeletion = async () => {
+        const choice = prompt("Type 'Y' to confirm");
+        if (choice.toLowerCase() === 'y') {
+            await actions.deleteCourse(id);
+            window.location.href = '/';
+        }
+    }
     
     return(
         <React.Fragment>
@@ -34,7 +43,7 @@ function CourseDetails(props) {
             <div className="actions--bar">
                 <div className="wrap">
                     <a className="button" href={`/update/${course.id}`}>Update Course</a>
-                    <a className="button" href="/">Delete Course</a>
+                    <button className="button" onClick={confirmDeletion}>Delete Course</button>
                     <a className="button button-secondary" href="/">Return to List</a>
                 </div>
             </div>
