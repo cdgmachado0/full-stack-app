@@ -8,7 +8,7 @@ import { Context } from '../Context';
 
 
 function UserSignIn() {
-    const { actions } = useContext(Context);
+    const { actions, authenticatedUser } = useContext(Context);
     const email = useRef();
     const password = useRef();
     

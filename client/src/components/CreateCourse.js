@@ -21,7 +21,7 @@ function CreateCourse() {
                 } else {
                     window.location.href = '/';
                 }
-            });
+            }); 
     }
 
     return (
@@ -59,7 +59,9 @@ function CreateCourse() {
     );
 }
 
-
+//export this component and use it here and in the signin validation (component) both.
+//errors state and setErrors are who interact with the ErrorValidation component
+//because they have to be used in two components (ErrorValidation/UserSignIn), consider to move them to Context.js.
 function ErrorValidation(props) {
     return (
         <React.Fragment>

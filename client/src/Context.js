@@ -84,8 +84,8 @@ export function Provider(props) {
         fetch(`${url}/users`, options)
             .then(res => res.json())
             .then(data => {
+                setAuth(data); //i'm putting the error message in authenticatedUSer state
                 Cookies.set('authenticatedUser', JSON.stringify(data), {expires: 1})
-                // window.location.href = '/';
             });
     }
 
