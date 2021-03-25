@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   BrowserRouter as Router,
-  Redirect,
   Route,
   Switch
 } from 'react-router-dom';
@@ -11,6 +10,7 @@ import CourseDetails from './components/CourseDetails';
 import UpdateCourse from './components/UpdateCourse';
 import CreateCourse from './components/CreateCourse';
 import UserSignIn from './components/UserSignIn';
+import UserSignOut from './components/UserSignOut';
 
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
         <Route path='/update/:id' component={UpdateCourse} />
         <Route path='/create' component={CreateCourse} />
         <Route path='/signin' component={UserSignIn} />
-        <Route path='/signout' render={() => <Redirect to='/' />} />
+        <Route path='/signout' component={UserSignOut} />
       </Switch>
     </Router>
     
