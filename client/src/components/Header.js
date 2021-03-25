@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Context } from '../Context';
 
 
 function Header() {
     const { authenticatedUser } = useContext(Context);
-    console.log(authenticatedUser);
     return (
         <React.Fragment>
             <header>
@@ -23,11 +22,13 @@ function Header() {
 }
 
 function SignedIn(props) {
+    const { actions } = useContext(Context);
+    
     return (
         <React.Fragment>
-            <ul class="header--signedin">
+            <ul className="header--signedin">
                 <li>Welcome, {props.name}!</li>
-                <li><Link to="sign-out.html">Sign Out</Link></li>
+                <li><Link to='/signin' onClick={actions.signOut} >Sign Out</Link></li>
             </ul>
         </React.Fragment>
     );
@@ -36,7 +37,7 @@ function SignedIn(props) {
 function SignedOut() {
     return (
         <React.Fragment>
-            <ul class="header--signedout">
+            <ul className="header--signedout">
                 <li><Link to="sign-up.html">Sign Up</Link></li>
                 <li><Link to="/signin">Sign In</Link></li>
             </ul>
@@ -44,7 +45,6 @@ function SignedOut() {
     );
 }
 
-//doing the routing of sign out (delete cookie and state),
-//but take into account to redirect from private routes also (create, update)
+
 
 export default Header;

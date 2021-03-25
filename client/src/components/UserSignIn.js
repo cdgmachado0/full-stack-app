@@ -3,9 +3,7 @@ import React, {
     useRef
 } from 'react';
 import { Link } from 'react-router-dom';
-import url from '../baseUrl';
 import { Context } from '../Context';
-import Cookies from 'js-cookie';
 
 
 
