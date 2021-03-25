@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   BrowserRouter as Router,
+  Redirect,
   Route,
   Switch
 } from 'react-router-dom';
@@ -23,6 +24,7 @@ function App() {
         <Route path='/update/:id' component={UpdateCourse} />
         <Route path='/create' component={CreateCourse} />
         <Route path='/signin' component={UserSignIn} />
+        <Route path='/signout' render={() => <Redirect to='/' />} />
       </Switch>
     </Router>
     

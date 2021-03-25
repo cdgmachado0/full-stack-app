@@ -1,5 +1,4 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
 import url from './baseUrl';
 import Cookies from 'js-cookie';
 
@@ -7,8 +6,8 @@ export const Context = React.createContext();
 
 
 export function Provider(props) {
-    // let history = useHistory();
-    let authenticatedUser = Cookies.getJSON('authenticatedUser') || null;
+    
+    const [ authenticatedUser, setAuth ] = useState(Cookies.getJSON('authenticatedUser') || null);
 
     const getCourses = () => {
         return fetch(`${url}/courses`)
@@ -91,10 +90,8 @@ export function Provider(props) {
     }
 
     const signOut = () => {
-        // e.preventDefault();
-        authenticatedUser = authenticatedUser !== null ? null : authenticatedUser;
-        Cookies.remove('authenticatedUser');
-        
+        setAuth(authenticatedUser !== null ? null : authenticatedUser);
+        Cookies.remove('authenticatedUser');  
     }
 
     const value = {

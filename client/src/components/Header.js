@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Context } from '../Context';
 
 
@@ -9,7 +9,7 @@ function Header() {
         <React.Fragment>
             <header>
                 <div className="wrap header--flex">
-                    <h1 className="header--logo"><a href="index.html">Courses</a></h1>
+                    <h1 className="header--logo"><a href="/">Courses</a></h1>
                     <nav>
                         {authenticatedUser && authenticatedUser.message !== 'Access denied' ?
                             <SignedIn name={authenticatedUser.name}/> : <SignedOut />
@@ -21,14 +21,13 @@ function Header() {
     );
 }
 
-function SignedIn(props) {
-    const { actions } = useContext(Context);
-    
+function SignedIn(props) {   
+    const { actions } = useContext(Context); 
     return (
         <React.Fragment>
             <ul className="header--signedin">
                 <li>Welcome, {props.name}!</li>
-                <li><Link to='/signin' onClick={actions.signOut} >Sign Out</Link></li>
+                <li><Link to='/signout' onClick={actions.signOut}>Sign Out</Link></li>
             </ul>
         </React.Fragment>
     );
