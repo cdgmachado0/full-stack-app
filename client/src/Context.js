@@ -1,10 +1,13 @@
 import React from 'react';
 import url from './baseUrl';
+import Cookies from 'js-cookie';
 
 export const Context = React.createContext();
 
 
 export function Provider(props) {
+
+    const authenticatedUser = Cookies.getJSON('authenticatedUser') || null;
 
     const getCourses = () => {
         return fetch(`${url}/courses`)
@@ -69,6 +72,7 @@ export function Provider(props) {
     }
 
     const value = {
+        authenticatedUser,
         actions: {
            getCourses,
            getCourseDetails,
@@ -76,7 +80,7 @@ export function Provider(props) {
            getFormData,
            goBack,
            createCourse,
-           deleteCourse
+           deleteCourse,
         }
     };
 

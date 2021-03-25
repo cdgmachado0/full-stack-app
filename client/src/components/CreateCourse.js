@@ -4,6 +4,8 @@ import React, {
 } from 'react';
 import { Context } from '../Context';
 
+import Header from './Header';
+
 
 function CreateCourse() {
     const { actions } = useContext(Context);
@@ -24,17 +26,7 @@ function CreateCourse() {
 
     return (
         <React.Fragment>
-            <header>
-                <div className="wrap header--flex">
-                    <h1 className="header--logo"><a href="index.html">Courses</a></h1>
-                    <nav>
-                        <ul className="header--signedin">
-                            <li>Welcome, Joe Smith!</li>
-                            <li><a href="sign-out.html">Sign Out</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </header>
+            <Header />
             <main>
                 <div className="wrap">
                     <h2>Create Course</h2>
@@ -84,10 +76,3 @@ function ErrorValidation(props) {
 
 export default CreateCourse;
 
-//got this to work but i have to put an author like a userID (foregin key).
-//Otherwise I get a 500 error.
-//Code a way to associate a name with an user ID fro mthe table.
-//If the new author to be created doesn't have an id, create a new entry
-//and assign him an ID
-
-//make the course author by default the person that logs in, so they can't change it

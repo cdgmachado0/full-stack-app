@@ -6,6 +6,8 @@ import React, {
 import { Context } from '../Context';
 import url from '../baseUrl';
 
+import Header from './Header';
+
 
 function UpdateCourse(props) {
     const { actions } = useContext(Context);
@@ -28,17 +30,7 @@ function UpdateCourse(props) {
 
     return (
         <React.Fragment>
-            <header>
-                <div className="wrap header--flex">
-                    <h1 className="header--logo"><a href="index.html">Courses</a></h1>
-                    <nav>
-                        <ul className="header--signedin">
-                            <li>Welcome, Joe Smith!</li>
-                            <li><a href="sign-out.html">Sign Out</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </header>
+            <Header />
             <main>
             <div className="wrap">
                 <h2>Update Course</h2>
