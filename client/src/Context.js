@@ -71,6 +71,24 @@ export function Provider(props) {
         window.location.href = path;
     }
 
+    const signIn = (e, email, password) => {
+        e.preventDefault();
+        const encodedCredentials = btoa(`${email}:${password}`);
+        const options = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'Authorization': `Basic ${encodedCredentials}`
+            }
+        };
+        fetch(`${url}/users`, options)
+            .then(res => res.json())
+            .then(data => {
+                Cookies.set('authenticatedUser', JSON.stringify(data), {expires: 1})
+                window.location.href = '/';
+            });
+    }
+
     const value = {
         authenticatedUser,
         actions: {
@@ -81,6 +99,7 @@ export function Provider(props) {
            goBack,
            createCourse,
            deleteCourse,
+           signIn
         }
     };
 

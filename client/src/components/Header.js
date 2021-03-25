@@ -44,5 +44,7 @@ function SignedOut() {
     );
 }
 
+//doing the routing of sign out (delete cookie and state),
+//but take into account to redirect from private routes also (create, update)
 
 export default Header;
