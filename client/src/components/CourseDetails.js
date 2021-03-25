@@ -25,6 +25,8 @@ function CourseDetails(props) {
         if (choice.toLowerCase() === 'y') {
             await actions.deleteCourse(id);
             window.location.href = '/';
+        } else {
+            alert("Deletion cancelled or 'Y' wasn't typed ");
         }
     }
     

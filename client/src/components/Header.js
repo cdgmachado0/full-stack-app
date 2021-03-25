@@ -27,7 +27,7 @@ function SignedIn(props) {
         <React.Fragment>
             <ul className="header--signedin">
                 <li>Welcome, {props.name}!</li>
-                <li><Link to='/signout' onClick={actions.signOut}>Sign Out</Link></li>
+                <li><Link to='/signout'>Sign Out</Link></li>
             </ul>
         </React.Fragment>
     );

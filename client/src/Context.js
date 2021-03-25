@@ -85,7 +85,7 @@ export function Provider(props) {
             .then(res => res.json())
             .then(data => {
                 Cookies.set('authenticatedUser', JSON.stringify(data), {expires: 1})
-                window.location.href = '/';
+                // window.location.href = '/';
             });
     }
 
