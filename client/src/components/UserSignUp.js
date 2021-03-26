@@ -16,9 +16,9 @@ function UserSignUp() {
                 if (data.errors) {
                     actions.setErrors(data.errors)
                 } else {
-                    window.location.href = '/';
+                    // window.location.href = '/';
                 }
-            }); 
+            });
     }
 
     return (
@@ -51,6 +51,3 @@ function UserSignUp() {
 
 export default UserSignUp;
 
-//Sequelize doesn't recognize firstName and lastName
-
-//it looks like password and confirmedPassword are not matching even if they're =
