@@ -11,6 +11,7 @@ import UpdateCourse from './components/UpdateCourse';
 import CreateCourse from './components/CreateCourse';
 import UserSignIn from './components/UserSignIn';
 import UserSignOut from './components/UserSignOut';
+import UserSignUp from './components/UserSignUp';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path='/create' component={CreateCourse} />
         <Route path='/signin' component={UserSignIn} />
         <Route path='/signout' component={UserSignOut} />
+        <Route path='/signup' component={UserSignUp} />
       </Switch>
     </Router>
     

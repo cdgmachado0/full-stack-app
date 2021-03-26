@@ -56,6 +56,17 @@ export function Provider(props) {
         fetch(`${url}/courses/${id}`, options);
     }
 
+    const createUser = (body) => {
+        const options = {
+            method: 'POST',
+            body,
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        };
+        return fetch(`${url}/users`, options);
+    }
+
     const getFormData = e => {
         e.preventDefault();
         const formData = new FormData(e.target.parentNode); 
@@ -113,7 +124,8 @@ export function Provider(props) {
            deleteCourse,
            signIn,
            signOut,
-           setErrors
+           setErrors,
+           createUser
         }
     };
 
