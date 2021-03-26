@@ -27,18 +27,19 @@ function UserSignUp() {
             <main>
                 <div className="form--centered">
                     <h2>Sign Up</h2>
-                    {/* <ErrorValidation errors={errors} /> */}
                     { errors && errors.length > 0 ? <ErrorValidation errors={errors} /> : '' }
                     <form>
-                        <label htmlFor="name">Name</label>
-                        <input id="name" name="name" type="text"/>
+                        <label htmlFor="firstName">First Name</label>
+                        <input id="firstName" name="firstName" type="text"/>
+                        <label htmlFor="lastName">Last Name</label>
+                        <input id="lastName" name="lastName" type="text"/>
                         <label htmlFor="emailAddress">Email Address</label>
                         <input id="emailAddress" name="emailAddress" type="email"/>
                         <label htmlFor="password">Password</label>
                         <input id="password" name="password" type="password"/>
                         <label htmlFor="confirmPassword">Confirm Password</label>
                         <input id="confirmPassword" name="confirmPassword" type="password"/>
-                        <button className="button" type="submit" onClick={setUser}>Sign Up</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button>
+                        <button className="button" type="submit" onClick={setUser}>Sign Up</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, '/')}>Cancel</button>
                     </form>
                     <p>Already have a user account? Click here to <a href="/signin">sign in</a>!</p>
                 </div>
@@ -49,3 +50,7 @@ function UserSignUp() {
 
 
 export default UserSignUp;
+
+//Sequelize doesn't recognize firstName and lastName
+
+//it looks like password and confirmedPassword are not matching even if they're =
