@@ -5,10 +5,12 @@ import React, {
 import { Link } from 'react-router-dom';
 import { Context } from '../Context';
 
+import ErrorValidation from './ErrorValidation';
+
 
 
 function UserSignIn() {
-    const { actions, authenticatedUser } = useContext(Context);
+    const { actions, errors } = useContext(Context);
     const email = useRef();
     const password = useRef();
     
@@ -28,7 +30,7 @@ function UserSignIn() {
             <main>
                 <div className="form--centered">
                     <h2>Sign In</h2>
-                    
+                    { errors.message ? <ErrorValidation errors={errors} /> : '' }
                     <form>
                         <label htmlFor="emailAddress">Email Address</label>
                         <input id="emailAddress" name="emailAddress" type="email" ref={email}/>

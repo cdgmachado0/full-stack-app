@@ -22,7 +22,6 @@ function Header() {
 }
 
 function SignedIn(props) {   
-    const { actions } = useContext(Context); 
     return (
         <React.Fragment>
             <ul className="header--signedin">
