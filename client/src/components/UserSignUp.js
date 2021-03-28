@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Context } from '../Context';
+import Cookies from 'js-cookie';
 
 import Header from './Header';
 import ErrorValidation from './ErrorValidation';
@@ -16,7 +17,9 @@ function UserSignUp() {
                 if (data.errors) {
                     actions.setErrors(data.errors)
                 } else {
-                    // window.location.href = '/';
+                    actions.setAuth(data); 
+                    Cookies.set('authenticatedUser', JSON.stringify(data), {expires: 1});
+                    window.location.href = '/'; 
                 }
             });
     }

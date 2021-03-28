@@ -125,7 +125,8 @@ export function Provider(props) {
            signIn,
            signOut,
            setErrors,
-           createUser
+           createUser,
+           setAuth
         }
     };
 
