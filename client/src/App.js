@@ -12,6 +12,7 @@ import CreateCourse from './components/CreateCourse';
 import UserSignIn from './components/UserSignIn';
 import UserSignOut from './components/UserSignOut';
 import UserSignUp from './components/UserSignUp';
+import PrivateRoute from './components/PrivateRoute';
 
 
 function App() {
@@ -22,8 +23,8 @@ function App() {
       <Switch>
         <Route exact path='/' component={Courses}/>
         <Route path='/courses/:id' component={CourseDetails} />
-        <Route path='/update/:id' component={UpdateCourse} />
-        <Route path='/create' component={CreateCourse} />
+        <PrivateRoute path='/update/:id' component={UpdateCourse} />
+        <PrivateRoute path='/create' component={CreateCourse} />
         <Route path='/signin' component={UserSignIn} />
         <Route path='/signout' component={UserSignOut} />
         <Route path='/signup' component={UserSignUp} />

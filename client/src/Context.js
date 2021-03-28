@@ -83,8 +83,9 @@ export function Provider(props) {
         window.location.href = path;
     }
 
-    const signIn = (e, email, password) => {
+    const signIn = (e, email, password, from) => {
         e.preventDefault();
+        // console.log(from);
         const encodedCredentials = btoa(`${email}:${password}`);
         const options = {
             method: 'GET',
@@ -99,7 +100,7 @@ export function Provider(props) {
                 if (data.email) {
                     setAuth(data); 
                     Cookies.set('authenticatedUser', JSON.stringify(data), {expires: 1});
-                    window.location.href = '/';
+                    window.location.href = from.pathname;
                 } else {
                     setErrors(data);
                 }
@@ -111,7 +112,7 @@ export function Provider(props) {
         Cookies.remove('authenticatedUser');  
     }
 
-    
+
     const signUp = (e) => {
         const capitalizeFirstLetter = name => name.charAt(0).toUpperCase() + name.slice(1);
 
