@@ -22,7 +22,6 @@ function Header() {
 }
 
 function SignedIn(props) {   
-    const { actions } = useContext(Context); 
     return (
         <React.Fragment>
             <ul className="header--signedin">
@@ -37,7 +36,7 @@ function SignedOut() {
     return (
         <React.Fragment>
             <ul className="header--signedout">
-                <li><Link to="sign-up.html">Sign Up</Link></li>
+                <li><Link to="/signup">Sign Up</Link></li>
                 <li><Link to="/signin">Sign In</Link></li>
             </ul>
         </React.Fragment>

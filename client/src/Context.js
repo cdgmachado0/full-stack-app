@@ -8,6 +8,7 @@ export const Context = React.createContext();
 export function Provider(props) {
     
     const [ authenticatedUser, setAuth ] = useState(Cookies.getJSON('authenticatedUser') || null);
+    const [ errors, setErrors ] = useState([]);
 
     const getCourses = () => {
         return fetch(`${url}/courses`)
@@ -55,6 +56,17 @@ export function Provider(props) {
         fetch(`${url}/courses/${id}`, options);
     }
 
+    const createUser = (body) => {
+        const options = {
+            method: 'POST',
+            body,
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        };
+        return fetch(`${url}/users`, options);
+    }
+
     const getFormData = e => {
         e.preventDefault();
         const formData = new FormData(e.target.parentNode); 
@@ -84,8 +96,13 @@ export function Provider(props) {
         fetch(`${url}/users`, options)
             .then(res => res.json())
             .then(data => {
-                Cookies.set('authenticatedUser', JSON.stringify(data), {expires: 1})
-                // window.location.href = '/';
+                if (data.email) {
+                    setAuth(data); 
+                    Cookies.set('authenticatedUser', JSON.stringify(data), {expires: 1});
+                    window.location.href = '/';
+                } else {
+                    setErrors(data);
+                }
             });
     }
 
@@ -96,6 +113,7 @@ export function Provider(props) {
 
     const value = {
         authenticatedUser,
+        errors,
         actions: {
            getCourses,
            getCourseDetails,
@@ -105,7 +123,10 @@ export function Provider(props) {
            createCourse,
            deleteCourse,
            signIn,
-           signOut
+           signOut,
+           setErrors,
+           createUser,
+           setAuth
         }
     };
 

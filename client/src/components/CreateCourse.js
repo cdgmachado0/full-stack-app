@@ -1,15 +1,12 @@
-import React, {
-    useContext,
-    useState
-} from 'react';
+import React, { useContext } from 'react';
 import { Context } from '../Context';
 
 import Header from './Header';
+import ErrorValidation from './ErrorValidation';
 
 
 function CreateCourse() {
-    const { actions } = useContext(Context);
-    const [ errors, setErrors ] = useState([]);
+    const { actions, errors } = useContext(Context);
     
     const setCourse = (e) => {
         const body = actions.getFormData(e);
@@ -17,11 +14,11 @@ function CreateCourse() {
             .then(res => res.json())
             .then(data => {
                 if (data.errors) {
-                    setErrors(data.errors)
+                    actions.setErrors(data.errors)
                 } else {
                     window.location.href = '/';
                 }
-            });
+            }); 
     }
 
     return (
@@ -59,19 +56,21 @@ function CreateCourse() {
     );
 }
 
-
-function ErrorValidation(props) {
-    return (
-        <React.Fragment>
-            <div className="validation--errors">
-                <h3>Validation Errors</h3>
-                <ul>
-                    {props.errors.map((error, i) => <li key={i}>{error}</li>)}
-                </ul>
-            </div>  
-        </React.Fragment>
-    );
-}
+//export this component and use it here and in the signin validation (component) both.
+//errors state and setErrors are who interact with the ErrorValidation component
+//because they have to be used in two components (ErrorValidation/UserSignIn), consider to move them to Context.js.
+// function ErrorValidation(props) {
+//     return (
+//         <React.Fragment>
+//             <div className="validation--errors">
+//                 <h3>Validation Errors</h3>
+//                 <ul>
+//                     {props.errors.map((error, i) => <li key={i}>{error}</li>)}
+//                 </ul>
+//             </div>  
+//         </React.Fragment>
+//     );
+// }
 
 
 export default CreateCourse;
