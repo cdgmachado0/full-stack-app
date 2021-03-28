@@ -6,18 +6,20 @@ import {
 import { Context } from '../Context';
 
 
-function PrivateRoute({ component: Component}) {
+function PrivateRoute({ component: Component, ...rest }) {
     const { authenticatedUser } = useContext(Context);
 
     return (
-        <Route render={props => authenticatedUser ? (
-            <Component />
-        ) : (
-            <Redirect to={{
-                pathname: '/signin',
-                state: { from: props.location }
-            }} />
-        )} />
+        <Route 
+            {...rest}
+            render={props => authenticatedUser ? (
+                <Component {...props} />
+            ) : (
+                <Redirect to={{
+                    pathname: '/signin',
+                    state: { from: props.location }
+                }} />
+            )} />
     );
 }
 

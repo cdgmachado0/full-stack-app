@@ -85,7 +85,6 @@ export function Provider(props) {
 
     const signIn = (e, email, password, from) => {
         e.preventDefault();
-        // console.log(from);
         const encodedCredentials = btoa(`${email}:${password}`);
         const options = {
             method: 'GET',

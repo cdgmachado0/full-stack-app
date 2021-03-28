@@ -13,6 +13,7 @@ import UserSignIn from './components/UserSignIn';
 import UserSignOut from './components/UserSignOut';
 import UserSignUp from './components/UserSignUp';
 import PrivateRoute from './components/PrivateRoute';
+import Forbidden from './components/Forbidden';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path='/signin' component={UserSignIn} />
         <Route path='/signout' component={UserSignOut} />
         <Route path='/signup' component={UserSignUp} />
+        <Route path='/forbidden' component={Forbidden} />
       </Switch>
     </Router>
     
