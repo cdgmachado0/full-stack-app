@@ -111,6 +111,26 @@ export function Provider(props) {
         Cookies.remove('authenticatedUser');  
     }
 
+    
+    const signUp = (e) => {
+        const capitalizeFirstLetter = name => name.charAt(0).toUpperCase() + name.slice(1);
+
+        const body = getFormData(e);
+        body.firstName = capitalizeFirstLetter(body.firstName);
+        body.lastName = capitalizeFirstLetter(body.lastName);
+        createUser(JSON.stringify(body))
+            .then(res => res.json())
+            .then(data => {
+                if (data.errors) {
+                    setErrors(data.errors)
+                } else {
+                    setAuth(data); 
+                    Cookies.set('authenticatedUser', JSON.stringify(data), {expires: 1});
+                    window.location.href = '/'; 
+                }
+            });
+    }
+
     const value = {
         authenticatedUser,
         errors,
@@ -126,7 +146,7 @@ export function Provider(props) {
            signOut,
            setErrors,
            createUser,
-           setAuth
+           signUp
         }
     };
 
