@@ -10,9 +10,9 @@ import url from '../baseUrl';
 import Header from './Header';
 
 function CourseDetails(props) {
-    const { actions, authenticatedUser } = useContext(Context);
+    const { actions, authenticatedUser, ownerId } = useContext(Context);
     const [ course, setDetails ] = useState({});
-    const [ ownerId, setOwner ] = useState('');
+    // const [ ownerId, setOwner ] = useState('');
     const fullUrl = url + props.match.url;
     const { id } = props.match.params;
     
@@ -20,7 +20,7 @@ function CourseDetails(props) {
         actions.getCourseDetails(fullUrl)
             .then(data => {
                 setDetails(data.course);
-                setOwner(data.course.Student.id);
+                actions.setOwner(data.course.Student.id);
             });
     }, [actions, fullUrl]);
 

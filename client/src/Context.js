@@ -9,6 +9,7 @@ export function Provider(props) {
     
     const [ authenticatedUser, setAuth ] = useState(Cookies.getJSON('authenticatedUser') || null);
     const [ errors, setErrors ] = useState([]);
+    const [ ownerId, setOwner ] = useState('');
 
     const getCourses = () => {
         return fetch(`${url}/courses`)
@@ -134,6 +135,7 @@ export function Provider(props) {
     const value = {
         authenticatedUser,
         errors,
+        ownerId,
         actions: {
            getCourses,
            getCourseDetails,
@@ -146,7 +148,8 @@ export function Provider(props) {
            signOut,
            setErrors,
            createUser,
-           signUp
+           signUp,
+           setOwner
         }
     };
 
