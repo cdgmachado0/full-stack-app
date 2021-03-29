@@ -99,7 +99,7 @@ export function Provider(props) {
                 if (data.email) {
                     setAuth(data); 
                     Cookies.set('authenticatedUser', JSON.stringify(data), {expires: 1});
-                    window.location.href = from.pathname;
+                    window.location.href = from.pathname; 
                 } else {
                     setErrors(data);
                 }

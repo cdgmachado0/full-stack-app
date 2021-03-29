@@ -5,7 +5,6 @@ import React, {
 } from 'react';
 import { Context } from '../Context';
 
-import CourseTemplate from './CourseTemplate';
 import Header from './Header';
 
 function Courses() {
@@ -44,6 +43,16 @@ function Courses() {
             </main>
         </React.Fragment>
         
+    );
+}
+
+
+function CourseTemplate(props) {
+    return (
+        <a className="course--module course--link" href={`/courses/${props.id}`}>
+            <h2 className="course--label">Course</h2>
+            <h3 className="course--title">{props.name}</h3>
+        </a>
     );
 }
 

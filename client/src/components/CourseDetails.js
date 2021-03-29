@@ -10,14 +10,18 @@ import url from '../baseUrl';
 import Header from './Header';
 
 function CourseDetails(props) {
-    const { actions } = useContext(Context);
+    const { actions, authenticatedUser } = useContext(Context);
     const [ course, setDetails ] = useState({});
+    const [ ownerId, setOwner ] = useState('');
     const fullUrl = url + props.match.url;
     const { id } = props.match.params;
-
+    
     useEffect(() => {
         actions.getCourseDetails(fullUrl)
-            .then(data => setDetails(data.course))
+            .then(data => {
+                setDetails(data.course);
+                setOwner(data.course.Student.id);
+            });
     }, [actions, fullUrl]);
 
     const confirmDeletion = async () => {
@@ -29,15 +33,21 @@ function CourseDetails(props) {
             alert("Deletion cancelled or 'Y' wasn't typed ");
         }
     }
-    
+   
     return(
         <React.Fragment>
             <Header />
             <main>
                 <div className="actions--bar">
                     <div className="wrap">
-                        <Link to={`/update/${course.id}`} className="button">Update Course</Link>
-                        <button className="button" onClick={confirmDeletion}>Delete Course</button>
+                        {authenticatedUser && +authenticatedUser.id === ownerId ?
+                            <React.Fragment>
+                                <Link to={`/update/${course.id}`} className="button">Update Course</Link>
+                                <button className="button" onClick={confirmDeletion}>Delete Course</button>
+                            </React.Fragment>
+                            :
+                            ''
+                        }
                         <Link to='/' className="button button-secondary">Return to List</Link>
                     </div>
                 </div> 
