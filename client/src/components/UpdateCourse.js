@@ -1,25 +1,38 @@
 import React, {
     useEffect,
     useContext,
-    useState
+    useState,
+    useRef,
 } from 'react';
+import { Redirect } from 'react-router-dom';
 import { Context } from '../Context';
 import url from '../baseUrl';
 
 import Header from './Header';
 
 
+
 function UpdateCourse(props) {
-    const { actions } = useContext(Context);
+    const { actions, ownerId, authenticatedUser } = useContext(Context);
     const [ course, setDetails ] = useState({});
     const { id } = props.match.params;
     const fullUrl = url + '/courses/' + id;
     const path = `/courses/${id}`;
 
     useEffect(() => {
+        let isMounted = true
         actions.getCourseDetails(fullUrl)
-            .then(data => setDetails(data.course));
+            .then(data => {
+                if (isMounted) {
+                    actions.setOwner(data.course.Student.id);
+                    setDetails(data.course);
+                }
+            });
+        return () => {
+            isMounted = false;
+        }
     }, [actions, fullUrl]);
+    
 
     const updateDetails = async (e, id) => {
         const body = actions.getFormData(e);
@@ -30,37 +43,43 @@ function UpdateCourse(props) {
 
     return (
         <React.Fragment>
-            <Header />
-            <main>
-            <div className="wrap">
-                <h2>Update Course</h2>
-                <form>
-                    <div className="main--flex">
-                        <div>
-                            <label htmlFor="courseTitle">Course Title</label>
-                            <input id="courseTitle" name="title" type="text" defaultValue={course.title} />
+            {!ownerId ? <div/> : authenticatedUser && +authenticatedUser.id === ownerId ?
+                <React.Fragment>
+                    <Header />
+                    <main>
+                        <div className="wrap">
+                            <h2>Update Course</h2>
+                            <form>
+                                <div className="main--flex">
+                                    <div>
+                                        <label htmlFor="courseTitle">Course Title</label>
+                                        <input id="courseTitle" name="title" type="text" defaultValue={course.title} />
 
-                            <label htmlFor="courseAuthor">Course Author</label>
-                            <input id="courseAuthor" name="courseAuthor" type="text" defaultValue={course.Student ? `${course.Student.firstName} ${course.Student.lastName}` : ''} />
+                                        <label htmlFor="courseAuthor">Course Author</label>
+                                        <input id="courseAuthor" name="courseAuthor" type="text" defaultValue={course.Student ? `${course.Student.firstName} ${course.Student.lastName}` : ''} />
 
-                            <label htmlFor="courseDescription">Course Description</label>
-                            <textarea id="courseDescription" name="description" defaultValue={course.description} />
+                                        <label htmlFor="courseDescription">Course Description</label>
+                                        <textarea id="courseDescription" name="description" defaultValue={course.description} />
+                                    </div>
+                                    <div>
+                                        {course.estimatedTime ?
+                                            <EstimatedTime estimated={course.estimatedTime} /> :
+                                                ''
+                                        }
+                                        {course.materialsNeeded ?
+                                            <MaterialsNeeded materials={course.materialsNeeded} /> :
+                                                ''
+                                        } 
+                                    </div>
+                                </div>
+                                <button className="button" type="submit" onClick={(e) => updateDetails(e, id)}>Update Course</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, path)}>Cancel</button>
+                            </form>
                         </div>
-                        <div>
-                            {course.estimatedTime ?
-                                <EstimatedTime estimated={course.estimatedTime} /> :
-                                    ''
-                            }
-                            {course.materialsNeeded ?
-                                <MaterialsNeeded materials={course.materialsNeeded} /> :
-                                    ''
-                            } 
-                        </div>
-                    </div>
-                    <button className="button" type="submit" onClick={(e) => updateDetails(e, id)}>Update Course</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, path)}>Cancel</button>
-                </form>
-            </div>
-        </main>
+                    </main>
+                </React.Fragment>
+                :
+                <Redirect to='/forbidden' />
+             }  
         </React.Fragment>
     );
 }
@@ -82,6 +101,7 @@ function MaterialsNeeded(props) {
         </React.Fragment>
     );
 } 
+
 
 
 

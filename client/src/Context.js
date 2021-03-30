@@ -9,6 +9,7 @@ export function Provider(props) {
     
     const [ authenticatedUser, setAuth ] = useState(Cookies.getJSON('authenticatedUser') || null);
     const [ errors, setErrors ] = useState([]);
+    const [ ownerId, setOwner ] = useState('');
 
     const getCourses = () => {
         return fetch(`${url}/courses`)
@@ -83,7 +84,7 @@ export function Provider(props) {
         window.location.href = path;
     }
 
-    const signIn = (e, email, password) => {
+    const signIn = (e, email, password, from) => {
         e.preventDefault();
         const encodedCredentials = btoa(`${email}:${password}`);
         const options = {
@@ -99,7 +100,7 @@ export function Provider(props) {
                 if (data.email) {
                     setAuth(data); 
                     Cookies.set('authenticatedUser', JSON.stringify(data), {expires: 1});
-                    window.location.href = '/';
+                    window.location.href = from.pathname; 
                 } else {
                     setErrors(data);
                 }
@@ -111,9 +112,30 @@ export function Provider(props) {
         Cookies.remove('authenticatedUser');  
     }
 
+
+    const signUp = (e) => {
+        const capitalizeFirstLetter = name => name.charAt(0).toUpperCase() + name.slice(1);
+
+        const body = getFormData(e);
+        body.firstName = capitalizeFirstLetter(body.firstName);
+        body.lastName = capitalizeFirstLetter(body.lastName);
+        createUser(JSON.stringify(body))
+            .then(res => res.json())
+            .then(data => {
+                if (data.errors) {
+                    setErrors(data.errors)
+                } else {
+                    setAuth(data); 
+                    Cookies.set('authenticatedUser', JSON.stringify(data), {expires: 1});
+                    window.location.href = '/'; 
+                }
+            });
+    }
+
     const value = {
         authenticatedUser,
         errors,
+        ownerId,
         actions: {
            getCourses,
            getCourseDetails,
@@ -126,7 +148,8 @@ export function Provider(props) {
            signOut,
            setErrors,
            createUser,
-           setAuth
+           signUp,
+           setOwner
         }
     };
 
