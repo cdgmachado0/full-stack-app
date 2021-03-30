@@ -2,7 +2,7 @@ import React, {
     useEffect,
     useContext,
     useState,
-    useRef
+    useRef,
 } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Context } from '../Context';
@@ -18,27 +18,20 @@ function UpdateCourse(props) {
     const { id } = props.match.params;
     const fullUrl = url + '/courses/' + id;
     const path = `/courses/${id}`;
-    
-    // const useComponentWillMount = func => {
-    //     const willMount = useRef(true);
-    //     if (willMount.current) {
-    //       func();
-    //     }
-    // }
-
-    // useComponentWillMount(() => console.log("willMount"));
-    let ownerRef = useRef();
 
     useEffect(() => {
+        let isMounted = true
         actions.getCourseDetails(fullUrl)
             .then(data => {
-                // ownerRef.current = data.course.Student.id;
-                actions.setOwner(data.course.Student.id);
-                setDetails(data.course);
-                // actions.setOwner(data.course.Student.id);
+                if (isMounted) {
+                    actions.setOwner(data.course.Student.id);
+                    setDetails(data.course);
+                }
             });
+        return () => {
+            isMounted = false;
+        }
     }, [actions, fullUrl]);
-
     
 
     const updateDetails = async (e, id) => {
@@ -47,16 +40,10 @@ function UpdateCourse(props) {
         window.location.href = `/courses/${id}`;
     }
 
-    const compareTwo = () => +authenticatedUser.id === ownerId;
-    console.log(ownerId);
-    // console.log('This is one: ', authenticatedUser.id);
-    // console.log('This is the other: ', ownerId);
-    // console.log(compareTwo());
-    // console.log(ownerRef);
-    // && +authenticatedUser.id === ownerId 
+
     return (
         <React.Fragment>
-            {ownerId === '' ? <div/> : authenticatedUser && +authenticatedUser.id === ownerId ? //did it but with a warning: check it
+            {!ownerId ? <div/> : authenticatedUser && +authenticatedUser.id === ownerId ?
                 <React.Fragment>
                     <Header />
                     <main>
@@ -91,10 +78,8 @@ function UpdateCourse(props) {
                     </main>
                 </React.Fragment>
                 :
-                <Redirect to={'/forbidden'} />
-             }
-            <Header />
-            
+                <Redirect to='/forbidden' />
+             }  
         </React.Fragment>
     );
 }

@@ -20,4 +20,3 @@ function Forbidden() {
 
 export default Forbidden;
 
-//working on the comp that gets rendered when isOwner failes ---->
