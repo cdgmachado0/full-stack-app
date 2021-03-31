@@ -33,7 +33,7 @@ export function Provider(props) {
                 'Content-Type': 'application/json; charset=utf-8',
             }
         };
-        fetch(`${url}/courses/${id}`, options);
+        return fetch(`${url}/courses/${id}`, options);
     }
 
     const createCourse = (body) => {

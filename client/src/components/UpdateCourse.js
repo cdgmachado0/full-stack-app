@@ -8,11 +8,12 @@ import { Context } from '../Context';
 import url from '../baseUrl';
 
 import Header from './Header';
+import ErrorValidation from './ErrorValidation';
 
 
 
 function UpdateCourse(props) {
-    const { actions, ownerId, authenticatedUser } = useContext(Context);
+    const { actions, ownerId, authenticatedUser, errors } = useContext(Context);
     const [ course, setDetails ] = useState({});
     const { id } = props.match.params;
     const fullUrl = url + '/courses/' + id;
@@ -33,12 +34,17 @@ function UpdateCourse(props) {
     }, [actions, fullUrl]);
     
 
-    const updateDetails = async (e, id) => {
+    const updateDetails = async (e, id) => { //similar to CreateCourse/setCourse *see if I can unifiy them (react hook or context)
         const body = actions.getFormData(e);
         body.isAuthenticated = true;
-        await actions.updateCourse(JSON.stringify(body), id);
-        window.location.href = `/courses/${id}`;
-    }
+        const response = await actions.updateCourse(JSON.stringify(body), id);
+        if (response.status === 204) {
+            window.location.href = `/courses/${id}`;
+        } else {
+            const data = await response.json();
+            actions.setErrors(data.errors);
+        }
+    } 
 
 
     return (
@@ -49,6 +55,7 @@ function UpdateCourse(props) {
                     <main>
                         <div className="wrap">
                             <h2>Update Course</h2>
+                            { errors && errors.length > 0 ? <ErrorValidation errors={errors} /> : '' }
                             <form>
                                 <div className="main--flex">
                                     <div>
