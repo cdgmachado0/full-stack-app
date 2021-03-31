@@ -47,9 +47,10 @@ export function Provider(props) {
         return fetch(`${url}/courses`, options);
     }
 
-    const deleteCourse = id => {
+    const deleteCourse = (id, body) => {
         const options = {
             method: 'DELETE',
+            body,
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'
             }

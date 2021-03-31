@@ -12,7 +12,6 @@ import Header from './Header';
 function CourseDetails(props) {
     const { actions, authenticatedUser, ownerId } = useContext(Context);
     const [ course, setDetails ] = useState({});
-    // const [ ownerId, setOwner ] = useState('');
     const fullUrl = url + props.match.url;
     const { id } = props.match.params;
     
@@ -27,7 +26,10 @@ function CourseDetails(props) {
     const confirmDeletion = async () => {
         const choice = prompt("Type 'Y' to confirm");
         if (choice.toLowerCase() === 'y') {
-            await actions.deleteCourse(id);
+            const body = {
+                isAuthenticated: true
+            };
+            await actions.deleteCourse(id, JSON.stringify(body));
             window.location.href = '/';
         } else {
             alert("Deletion cancelled or 'Y' wasn't typed ");

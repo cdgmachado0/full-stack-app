@@ -35,6 +35,7 @@ function UpdateCourse(props) {
 
     const updateDetails = async (e, id) => {
         const body = actions.getFormData(e);
+        body.isAuthenticated = true;
         await actions.updateCourse(JSON.stringify(body), id);
         window.location.href = `/courses/${id}`;
     }

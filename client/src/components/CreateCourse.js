@@ -10,6 +10,7 @@ function CreateCourse() {
 
     const setCourse = async (e) => {
         const body = actions.getFormData(e);
+        body.isAuthenticated = true;
         const response = await actions.createCourse(JSON.stringify(body));
         if (response.status === 201) {
             window.location.href = '/';
