@@ -2,7 +2,6 @@ import React, {
     useEffect,
     useContext,
     useState,
-    useRef,
 } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Context } from '../Context';

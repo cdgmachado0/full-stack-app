@@ -6,19 +6,17 @@ import ErrorValidation from './ErrorValidation';
 
 
 function CreateCourse() {
-    const { actions, errors } = useContext(Context);
-    
-    const setCourse = (e) => {
+    const { actions, errors, authenticatedUser } = useContext(Context);
+
+    const setCourse = async (e) => {
         const body = actions.getFormData(e);
-        actions.createCourse(JSON.stringify(body))
-            .then(res => res.json())
-            .then(data => {
-                if (data.errors) {
-                    actions.setErrors(data.errors)
-                } else {
-                    window.location.href = '/';
-                }
-            }); 
+        const response = await actions.createCourse(JSON.stringify(body));
+        if (response.status === 201) {
+            window.location.href = '/';
+        } else {
+            const data = await response.json();
+            actions.setErrors(data.errors);
+        }
     }
 
     return (
@@ -35,7 +33,7 @@ function CreateCourse() {
                                 <input id="courseTitle" name="title" type="text" />
 
                                 <label htmlFor="courseAuthor">Course Author</label>
-                                <input id="courseAuthor" name="userId" type="text" />
+                                <input id="courseAuthor" name="userId" type="text" defaultValue={authenticatedUser.name} readOnly='readonly'/>
 
                                 <label htmlFor="courseDescription">Course Description</label>
                                 <textarea id="courseDescription" name="description"></textarea>
@@ -56,21 +54,6 @@ function CreateCourse() {
     );
 }
 
-//export this component and use it here and in the signin validation (component) both.
-//errors state and setErrors are who interact with the ErrorValidation component
-//because they have to be used in two components (ErrorValidation/UserSignIn), consider to move them to Context.js.
-// function ErrorValidation(props) {
-//     return (
-//         <React.Fragment>
-//             <div className="validation--errors">
-//                 <h3>Validation Errors</h3>
-//                 <ul>
-//                     {props.errors.map((error, i) => <li key={i}>{error}</li>)}
-//                 </ul>
-//             </div>  
-//         </React.Fragment>
-//     );
-// }
 
 
 export default CreateCourse;
