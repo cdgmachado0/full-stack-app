@@ -4,6 +4,7 @@ import React, {
     useState
 } from 'react';
 import { Link } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 import { Context } from '../Context';
 import url from '../baseUrl';
 
@@ -92,18 +93,13 @@ function EstimatedTime(props) {
 }
 
 function MaterialsNeeded(props) {
-    const { materials } = props;
-    let arrMaterials = materials.split('*');
-    if (arrMaterials[0] === '') {
-        arrMaterials.shift()
-    }
-    const createList = () => arrMaterials.map((material, index) => <li key={index}>{material}</li>);
-
+    const markdown = props.materials;
+    
     return (
         <React.Fragment>
             <h3 className="course--detail--title">Materials Needed</h3>
             <ul className="course--detail--list">
-                {createList()}
+                <ReactMarkdown source={markdown} />
             </ul>
         </React.Fragment>
     );

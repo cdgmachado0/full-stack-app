@@ -10,10 +10,11 @@ function CreateCourse() {
 
     const setCourse = async (e) => {
         const body = actions.getFormData(e);
+        console.log(typeof body.materialsNeeded); //creating a regex that matches each sentence separately and its line break (materials needed)
         body.isAuthenticated = true;
         const response = await actions.createCourse(JSON.stringify(body));
         if (response.status === 201) {
-            window.location.href = '/';
+            // window.location.href = '/';
         } else {
             const data = await response.json();
             actions.setErrors(data.errors);
