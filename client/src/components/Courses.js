@@ -4,6 +4,7 @@ import React, {
     useEffect 
 } from 'react';
 import { Context } from '../Context';
+import url from '../baseUrl';
 
 import Header from './Header';
 
@@ -12,8 +13,10 @@ function Courses() {
     const [ courses, setCourses ] = useState([]);
     
     useEffect(() => {
-        actions.getCourses()
-            .then(data => setCourses(data.courses));
+        fetch(`${url}/courses`)
+            .then(res => res.json())
+            .then(data => setCourses(data.courses))
+            .catch(err => console.log(err));
     }, [actions]);
 
     const renderCourses = () => {

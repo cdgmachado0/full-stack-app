@@ -21,13 +21,15 @@ function UpdateCourse(props) {
 
     useEffect(() => {
         let isMounted = true
-        actions.getCourseDetails(fullUrl)
+        fetch(fullUrl)
+            .then(res => res.json())
             .then(data => {
                 if (isMounted) {
                     actions.setOwner(data.course.Student.id);
                     setDetails(data.course);
                 }
-            });
+            })
+            .catch(err => console.log(err));
         return () => {
             isMounted = false;
         }
@@ -69,14 +71,16 @@ function UpdateCourse(props) {
                                         <textarea id="courseDescription" name="description" defaultValue={course.description} />
                                     </div>
                                     <div>
-                                        {course.estimatedTime ?
+                                        <EstimatedTime estimated={() => course.estimatedTime ? course.estimatedTime : ''} />
+                                        <MaterialsNeeded materials={() => course.materialsNeeded ? course.materialsNeeded : ''} />
+                                        {/* {course.estimatedTime ?
                                             <EstimatedTime estimated={course.estimatedTime} /> :
                                                 ''
                                         }
                                         {course.materialsNeeded ?
                                             <MaterialsNeeded materials={course.materialsNeeded} /> :
                                                 ''
-                                        } 
+                                        }  */}
                                     </div>
                                 </div>
                                 <button className="button" type="submit" onClick={(e) => updateDetails(e, id)}>Update Course</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, path)}>Cancel</button>

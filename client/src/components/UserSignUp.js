@@ -7,7 +7,7 @@ import ErrorValidation from './ErrorValidation';
 
 function UserSignUp() {
     const { actions, errors } = useContext(Context);
-    
+
     return (
         <React.Fragment>
             <Header />

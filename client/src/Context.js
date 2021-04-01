@@ -11,19 +11,11 @@ export function Provider(props) {
     const [ errors, setErrors ] = useState([]);
     const [ ownerId, setOwner ] = useState('');
 
-    const getCourses = () => {
-        return fetch(`${url}/courses`)
-            .then(res => res.json())
-            .then(data => data)
-            .catch(err => console.log(err));
+
+    const api = (url, method, body, headers, id, authorized) => {
+        console.log('hi');
     }
 
-    const getCourseDetails = (url) => {
-        return fetch(url)
-            .then(res => res.json())
-            .then(data => data)
-            .catch(err => console.log(err));
-    }
 
     const updateCourse = (body, id) => {
         const options = {
@@ -138,8 +130,6 @@ export function Provider(props) {
         errors,
         ownerId,
         actions: {
-           getCourses,
-           getCourseDetails,
            updateCourse,
            getFormData,
            goBack,
@@ -150,7 +140,8 @@ export function Provider(props) {
            setErrors,
            createUser,
            signUp,
-           setOwner
+           setOwner,
+           api
         }
     };
 

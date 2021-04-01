@@ -17,13 +17,14 @@ function CourseDetails(props) {
     const { id } = props.match.params;
     
     useEffect(() => {
-        actions.getCourseDetails(fullUrl)
+        fetch(fullUrl)
+            .then(res => res.json())
             .then(data => {
                 setDetails(data.course);
                 actions.setOwner(data.course.Student.id);
             })
             .catch(err => console.log(err));
-    }, [actions, fullUrl]);
+    }, [actions, fullUrl]); 
 
     const confirmDeletion = async () => {
         const choice = prompt("Type 'Y' to confirm");

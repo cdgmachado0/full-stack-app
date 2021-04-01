@@ -17,7 +17,9 @@ function CreateCourse() {
         }
 
         const body = actions.getFormData(e);
-        body.materialsNeeded = setMarkdown();
+        if (body.materialsNeeded) {
+            body.materialsNeeded = setMarkdown();
+        }
         body.isAuthenticated = true;
         const response = await actions.createCourse(JSON.stringify(body));
 
