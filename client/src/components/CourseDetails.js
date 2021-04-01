@@ -21,7 +21,8 @@ function CourseDetails(props) {
             .then(data => {
                 setDetails(data.course);
                 actions.setOwner(data.course.Student.id);
-            });
+            })
+            .catch(err => console.log(err));
     }, [actions, fullUrl]);
 
     const confirmDeletion = async () => {
