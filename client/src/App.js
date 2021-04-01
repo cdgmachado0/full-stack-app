@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   BrowserRouter as Router,
+  Redirect,
   Route,
   Switch
 } from 'react-router-dom';
@@ -14,6 +15,7 @@ import UserSignOut from './components/UserSignOut';
 import UserSignUp from './components/UserSignUp';
 import PrivateRoute from './components/PrivateRoute';
 import Forbidden from './components/Forbidden';
+import NotFound from './components/NotFound';
 
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
         <Route path='/signout' component={UserSignOut} />
         <Route path='/signup' component={UserSignUp} />
         <Route path='/forbidden' component={Forbidden} />
+        <Route path='/notfound' component={NotFound} />
+        <Route render={() => <Redirect to='/notfound' />} />
       </Switch>
     </Router>
     
