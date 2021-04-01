@@ -9,22 +9,18 @@ function CreateCourse() {
     const { actions, errors, authenticatedUser } = useContext(Context);
 
     const setCourse = async (e) => {
+        const setMarkdown = () => {
+            return body.materialsNeeded
+                .match(/^.+$[\n\r]*/gm)
+                .map((material, index) => index === 0 ? '* ' + material : material)
+                .join('* ');
+        }
+
         const body = actions.getFormData(e);
-
-        const marked = body.materialsNeeded
-            .match(/^.+$[\n\r]*/gm)
-            .map((material, index) => {
-                if (index === 0) {
-                    return '* ' + material;
-                } else {
-                    return material;
-                }
-            })
-            .join('* ');
-        body.materialsNeeded = marked;
-
+        body.materialsNeeded = setMarkdown();
         body.isAuthenticated = true;
         const response = await actions.createCourse(JSON.stringify(body));
+
         if (response.status === 201) {
             window.location.href = '/';
         } else {
