@@ -37,7 +37,17 @@ function UpdateCourse(props) {
     
 
     const updateDetails = async (e, id) => { //similar to CreateCourse/setCourse *see if I can unifiy them (react hook or context)
+        const setMarkdown = () => {
+            return body.materialsNeeded
+                .match(/^.+$[\n\r]*/gm)
+                .map((material, index) => index === 0 ? '* ' + material : material)
+                .join('* ');
+        }
+        
         const body = actions.getFormData(e);
+        if (body.materialsNeeded) {
+            body.materialsNeeded = setMarkdown();
+        }
         body.isAuthenticated = true;
         const response = await actions.updateCourse(JSON.stringify(body), id);
         if (response.status === 204) {
@@ -48,7 +58,8 @@ function UpdateCourse(props) {
         }
     } 
 
-
+    console.log(course); //course.materialsNeeded is passed like {} in a first fetch and then with data the second, so the empty obj is what gets posted
+    //this casue that when clicking on Update, materialsNeeded is empty
     return (
         <React.Fragment>
             {!ownerId ? <div/> : authenticatedUser && +authenticatedUser.id === ownerId ?
