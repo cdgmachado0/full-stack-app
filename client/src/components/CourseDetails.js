@@ -26,7 +26,7 @@ function CourseDetails(props) {
 
     const confirmDeletion = async () => {
         const choice = prompt("Type 'Y' to confirm");
-        if (choice.toLowerCase() === 'y') {
+        if (choice && choice.toLowerCase() === 'y') {
             const body = {
                 isAuthenticated: true
             };
@@ -94,7 +94,7 @@ function EstimatedTime(props) {
 
 function MaterialsNeeded(props) {
     const markdown = props.materials;
-    
+  
     return (
         <React.Fragment>
             <h3 className="course--detail--title">Materials Needed</h3>
