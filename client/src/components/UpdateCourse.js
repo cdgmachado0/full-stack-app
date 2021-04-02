@@ -58,8 +58,15 @@ function UpdateCourse(props) {
         }
     } 
 
-    console.log(course); //course.materialsNeeded is passed like {} in a first fetch and then with data the second, so the empty obj is what gets posted
-    //this casue that when clicking on Update, materialsNeeded is empty
+    const revertMarkdown = items => {
+        const noMark = items.split('*');
+        // console.log(noMark);
+        noMark.shift();
+        const c = noMark.map(elem => elem.trimStart());
+        return c.join('');
+    }
+
+
     return (
         <React.Fragment>
             {!ownerId ? <div/> : authenticatedUser && +authenticatedUser.id === ownerId ?
@@ -82,8 +89,8 @@ function UpdateCourse(props) {
                                         <textarea id="courseDescription" name="description" defaultValue={course.description} />
                                     </div>
                                     <div>
-                                        <EstimatedTime estimated={() => course.estimatedTime ? course.estimatedTime : ''} />
-                                        <MaterialsNeeded materials={() => course.materialsNeeded ? course.materialsNeeded : ''} />
+                                        <EstimatedTime estimated={course.estimatedTime ? course.estimatedTime : ''} />
+                                        <MaterialsNeeded materials={course.materialsNeeded ? revertMarkdown(course.materialsNeeded) : ''} />
                                         {/* {course.estimatedTime ?
                                             <EstimatedTime estimated={course.estimatedTime} /> :
                                                 ''
@@ -116,6 +123,7 @@ function EstimatedTime(props) {
 }
 
 function MaterialsNeeded(props) {
+    // console.log(props.materials);
     return (
         <React.Fragment>
             <label htmlFor="materialsNeeded">Materials Needed</label>
