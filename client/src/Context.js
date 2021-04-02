@@ -12,32 +12,44 @@ export function Provider(props) {
     const [ ownerId, setOwner ] = useState('');
 
 
-    const api = (url, method, body, headers, id, authorized) => {
-        console.log('hi');
-    }
-
-
-    const updateCourse = (body, id) => {
+    const api = (url, method, _body) => {
+        const body = JSON.stringify(_body);
         const options = {
-            method: 'PUT',
+            method,
             body,
             headers: {
-                'Content-Type': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json; charset=utf-8'
             }
         };
-        return fetch(`${url}/courses/${id}`, options);
+
+        return fetch(url, options);
+    }
+    
+
+    const setCourseDetails = async (e, url, method) => {
+        const setMarkdown = () => {
+            return body.materialsNeeded
+                .match(/^.+$[\n\r]*/gm)
+                .map((material, index) => index === 0 ? '* ' + material : material)
+                .join('* ');
+        }
+        
+        const body = getFormData(e);
+        if (body.materialsNeeded) {
+            body.materialsNeeded = setMarkdown();
+        }
+        body.isAuthenticated = true;
+        
+        const response = await api(url, method, body);
+        if (response.status === 201 || response.status === 204) {
+            window.location.href = '/';
+        } else {
+            const data = await response.json();
+            setErrors(data.errors);
+        }
     }
 
-    const createCourse = (body) => {
-        const options = {
-            method: 'POST',
-            body,
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-            }
-        };
-        return fetch(`${url}/courses`, options);
-    }
+
 
     const deleteCourse = (id, body) => {
         const options = {
@@ -125,38 +137,15 @@ export function Provider(props) {
             });
     }
 
-    const setCourseDetails = async (e, func, id = null) => {
-        const setMarkdown = () => {
-            return body.materialsNeeded
-                .match(/^.+$[\n\r]*/gm)
-                .map((material, index) => index === 0 ? '* ' + material : material)
-                .join('* ');
-        }
-        
-        const body = getFormData(e);
-        if (body.materialsNeeded) {
-            body.materialsNeeded = setMarkdown();
-        }
-        body.isAuthenticated = true;
-
-        const response = await func(JSON.stringify(body), id);
-        if (response.status === 201 || response.status === 204) {
-            window.location.href = '/';
-        } else {
-            const data = await response.json();
-            setErrors(data.errors);
-        }
-    }
+    
 
     const value = {
         authenticatedUser,
         errors,
         ownerId,
         actions: {
-           updateCourse,
            getFormData,
            goBack,
-           createCourse,
            deleteCourse,
            signIn,
            signOut,

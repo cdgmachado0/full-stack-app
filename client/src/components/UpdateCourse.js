@@ -36,28 +36,6 @@ function UpdateCourse(props) {
     }, [actions, fullUrl]);
     
 
-    // const updateDetails = async (e, id) => { //similar to CreateCourse/setCourse *see if I can unifiy them (react hook or context)
-    //     const setMarkdown = () => {
-    //         return body.materialsNeeded
-    //             .match(/^.+$[\n\r]*/gm)
-    //             .map((material, index) => index === 0 ? '* ' + material : material)
-    //             .join('* ');
-    //     }
-        
-    //     const body = actions.getFormData(e);
-    //     if (body.materialsNeeded) {
-    //         body.materialsNeeded = setMarkdown();
-    //     }
-    //     body.isAuthenticated = true;
-    //     const response = await actions.updateCourse(JSON.stringify(body), id);
-    //     if (response.status === 204) {
-    //         window.location.href = `/courses/${id}`;
-    //     } else {
-    //         const data = await response.json();
-    //         actions.setErrors(data.errors);
-    //     }
-    // } 
-
 
 
 
@@ -97,7 +75,7 @@ function UpdateCourse(props) {
                                         <MaterialsNeeded materials={course.materialsNeeded ? revertMarkdown(course.materialsNeeded) : ''} />
                                     </div>
                                 </div>
-                                <button className="button" type="submit" onClick={(e) => actions.setCourseDetails(e, actions.updateCourse, id)}>Update Course</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, path)}>Cancel</button>
+                                <button className="button" type="submit" onClick={(e) => actions.setCourseDetails(e, fullUrl, 'PUT')}>Update Course</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, path)}>Cancel</button>
                             </form>
                         </div>
                     </main>

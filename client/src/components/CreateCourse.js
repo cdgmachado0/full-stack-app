@@ -3,10 +3,12 @@ import { Context } from '../Context';
 
 import Header from './Header';
 import ErrorValidation from './ErrorValidation';
+import url from '../baseUrl';
 
 
 function CreateCourse() {
     const { actions, errors, authenticatedUser } = useContext(Context);
+    const fullUrl = url + '/courses';
 
     return (
         <React.Fragment>
@@ -35,7 +37,7 @@ function CreateCourse() {
                                 <textarea id="materialsNeeded" name="materialsNeeded"></textarea>
                             </div>
                         </div>
-                        <button className="button" type="submit" onClick={(e) => actions.setCourseDetails(e, actions.createCourse)}>Create Course</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, '/')}>Cancel</button>
+                        <button className="button" type="submit" onClick={(e) => actions.setCourseDetails(e, fullUrl, 'POST')}>Create Course</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, '/')}>Cancel</button>
                     </form> 
                 </div>
             </main>
