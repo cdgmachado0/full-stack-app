@@ -8,29 +8,6 @@ import ErrorValidation from './ErrorValidation';
 function CreateCourse() {
     const { actions, errors, authenticatedUser } = useContext(Context);
 
-    const setCourse = async (e) => {
-        const setMarkdown = () => {
-            return body.materialsNeeded
-                .match(/^.+$[\n\r]*/gm)
-                .map((material, index) => index === 0 ? '* ' + material : material)
-                .join('* ');
-        }
-
-        const body = actions.getFormData(e);
-        if (body.materialsNeeded) {
-            body.materialsNeeded = setMarkdown();
-        }
-        body.isAuthenticated = true;
-        const response = await actions.createCourse(JSON.stringify(body));
-
-        if (response.status === 201) {
-            window.location.href = '/';
-        } else {
-            const data = await response.json();
-            actions.setErrors(data.errors);
-        }
-    }
-
     return (
         <React.Fragment>
             <Header />
@@ -58,7 +35,7 @@ function CreateCourse() {
                                 <textarea id="materialsNeeded" name="materialsNeeded"></textarea>
                             </div>
                         </div>
-                        <button className="button" type="submit" onClick={(e) => setCourse(e)}>Create Course</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, '/')}>Cancel</button>
+                        <button className="button" type="submit" onClick={(e) => actions.setCourseDetails(e, actions.createCourse)}>Create Course</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, '/')}>Cancel</button>
                     </form> 
                 </div>
             </main>

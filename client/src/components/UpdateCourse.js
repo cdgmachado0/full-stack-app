@@ -36,34 +36,38 @@ function UpdateCourse(props) {
     }, [actions, fullUrl]);
     
 
-    const updateDetails = async (e, id) => { //similar to CreateCourse/setCourse *see if I can unifiy them (react hook or context)
-        const setMarkdown = () => {
-            return body.materialsNeeded
-                .match(/^.+$[\n\r]*/gm)
-                .map((material, index) => index === 0 ? '* ' + material : material)
-                .join('* ');
-        }
+    // const updateDetails = async (e, id) => { //similar to CreateCourse/setCourse *see if I can unifiy them (react hook or context)
+    //     const setMarkdown = () => {
+    //         return body.materialsNeeded
+    //             .match(/^.+$[\n\r]*/gm)
+    //             .map((material, index) => index === 0 ? '* ' + material : material)
+    //             .join('* ');
+    //     }
         
-        const body = actions.getFormData(e);
-        if (body.materialsNeeded) {
-            body.materialsNeeded = setMarkdown();
-        }
-        body.isAuthenticated = true;
-        const response = await actions.updateCourse(JSON.stringify(body), id);
-        if (response.status === 204) {
-            window.location.href = `/courses/${id}`;
-        } else {
-            const data = await response.json();
-            actions.setErrors(data.errors);
-        }
-    } 
+    //     const body = actions.getFormData(e);
+    //     if (body.materialsNeeded) {
+    //         body.materialsNeeded = setMarkdown();
+    //     }
+    //     body.isAuthenticated = true;
+    //     const response = await actions.updateCourse(JSON.stringify(body), id);
+    //     if (response.status === 204) {
+    //         window.location.href = `/courses/${id}`;
+    //     } else {
+    //         const data = await response.json();
+    //         actions.setErrors(data.errors);
+    //     }
+    // } 
+
+
+
+
+
 
     const revertMarkdown = items => {
-        const noMark = items.split('*');
-        // console.log(noMark);
-        noMark.shift();
-        const c = noMark.map(elem => elem.trimStart());
-        return c.join('');
+        const a = items.split('*');
+        a.shift();
+        const noMark = a.map(elem => elem.trimStart());
+        return noMark.join('');
     }
 
 
@@ -91,17 +95,9 @@ function UpdateCourse(props) {
                                     <div>
                                         <EstimatedTime estimated={course.estimatedTime ? course.estimatedTime : ''} />
                                         <MaterialsNeeded materials={course.materialsNeeded ? revertMarkdown(course.materialsNeeded) : ''} />
-                                        {/* {course.estimatedTime ?
-                                            <EstimatedTime estimated={course.estimatedTime} /> :
-                                                ''
-                                        }
-                                        {course.materialsNeeded ?
-                                            <MaterialsNeeded materials={course.materialsNeeded} /> :
-                                                ''
-                                        }  */}
                                     </div>
                                 </div>
-                                <button className="button" type="submit" onClick={(e) => updateDetails(e, id)}>Update Course</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, path)}>Cancel</button>
+                                <button className="button" type="submit" onClick={(e) => actions.setCourseDetails(e, actions.updateCourse, id)}>Update Course</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, path)}>Cancel</button>
                             </form>
                         </div>
                     </main>
@@ -123,7 +119,6 @@ function EstimatedTime(props) {
 }
 
 function MaterialsNeeded(props) {
-    // console.log(props.materials);
     return (
         <React.Fragment>
             <label htmlFor="materialsNeeded">Materials Needed</label>

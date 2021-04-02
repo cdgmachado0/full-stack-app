@@ -125,6 +125,29 @@ export function Provider(props) {
             });
     }
 
+    const setCourseDetails = async (e, func, id = null) => {
+        const setMarkdown = () => {
+            return body.materialsNeeded
+                .match(/^.+$[\n\r]*/gm)
+                .map((material, index) => index === 0 ? '* ' + material : material)
+                .join('* ');
+        }
+        
+        const body = getFormData(e);
+        if (body.materialsNeeded) {
+            body.materialsNeeded = setMarkdown();
+        }
+        body.isAuthenticated = true;
+
+        const response = await func(JSON.stringify(body), id);
+        if (response.status === 201 || response.status === 204) {
+            window.location.href = '/';
+        } else {
+            const data = await response.json();
+            setErrors(data.errors);
+        }
+    }
+
     const value = {
         authenticatedUser,
         errors,
@@ -141,7 +164,8 @@ export function Provider(props) {
            createUser,
            signUp,
            setOwner,
-           api
+           api,
+           setCourseDetails
         }
     };
 
