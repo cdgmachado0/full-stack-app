@@ -75,7 +75,7 @@ function UpdateCourse(props) {
                                         <MaterialsNeeded materials={course.materialsNeeded ? revertMarkdown(course.materialsNeeded) : ''} />
                                     </div>
                                 </div>
-                                <button className="button" type="submit" onClick={(e) => actions.setCourseDetails(e, fullUrl, 'PUT')}>Update Course</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, path)}>Cancel</button>
+                                <button className="button" type="submit" onClick={(e) => actions.handleCourseUserInter(e, fullUrl, 'PUT')}>Update Course</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, path)}>Cancel</button>
                             </form>
                         </div>
                     </main>

@@ -37,7 +37,7 @@ function CreateCourse() {
                                 <textarea id="materialsNeeded" name="materialsNeeded"></textarea>
                             </div>
                         </div>
-                        <button className="button" type="submit" onClick={(e) => actions.setCourseDetails(e, fullUrl, 'POST')}>Create Course</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, '/')}>Cancel</button>
+                        <button className="button" type="submit" onClick={(e) => actions.handleCourseUserInter(e, fullUrl, 'POST')}>Create Course</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, '/')}>Cancel</button>
                     </form> 
                 </div>
             </main>

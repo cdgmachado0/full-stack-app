@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import url from './baseUrl';
 import Cookies from 'js-cookie';
+import { Redirect } from 'react-router-dom';
 
 export const Context = React.createContext();
 
@@ -12,21 +13,34 @@ export function Provider(props) {
     const [ ownerId, setOwner ] = useState('');
 
 
-    const api = (url, method, _body) => {
-        const body = JSON.stringify(_body);
-        const options = {
-            method,
-            body,
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8'
+    const api = async (url, method = 'GET', _body) => {
+        try {
+            let body;
+            if (_body) {
+                body = JSON.stringify(_body);
             }
-        };
+            const options = {
+                method,
+                body,
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                }
+            };
 
-        return fetch(url, options);
+            
+            const res = await fetch(url, options);
+            if (res) {
+                return res;
+            }
+            // return fetch(url, options);
+        } catch (err) {
+            window.location.href = '/error';
+        }
+            
     }
     
 
-    const setCourseDetails = async (e, url, method) => {
+    const handleCourseUserInter = async (e, url, method) => {
         const setMarkdown = () => {
             return body.materialsNeeded
                 .match(/^.+$[\n\r]*/gm)
@@ -133,7 +147,7 @@ export function Provider(props) {
            signUp,
            setOwner,
            api,
-           setCourseDetails
+           handleCourseUserInter
         }
     };
 
