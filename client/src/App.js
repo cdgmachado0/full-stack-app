@@ -26,9 +26,9 @@ function App() {
     <Router>
       <Switch>
         <Route exact path='/' component={Courses}/>
+        <PrivateRoute exact path='/courses/create' component={CreateCourse} />
         <Route path='/courses/:id' component={CourseDetails} />
         <PrivateRoute path='/update/:id' component={UpdateCourse} />
-        <PrivateRoute path='/create' component={CreateCourse} />
         <Route path='/signin' component={UserSignIn} />
         <Route path='/signout' component={UserSignOut} />
         <Route path='/signup' component={UserSignUp} />
