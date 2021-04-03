@@ -10,7 +10,7 @@ import url from '../baseUrl';
 
 import Header from './Header';
 
-function CourseDetails(props) {
+function CourseDetail(props) {
     const { actions, authenticatedUser, ownerId } = useContext(Context);
     const [ course, setDetails ] = useState(null);
     const fullUrl = url + props.match.url;
@@ -111,7 +111,7 @@ function MaterialsNeeded(props) {
 }
 
 
-export default CourseDetails;
+export default CourseDetail;
 
 
 

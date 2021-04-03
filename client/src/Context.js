@@ -81,7 +81,7 @@ export function Provider(props) {
     }
 
 
-    const signIn = (e, email, password, from) => {
+    const signIn = (e, email, password, from) => { //keep it global
         e.preventDefault();
         const encodedCredentials = btoa(`${email}:${password}`);
         const options = {
