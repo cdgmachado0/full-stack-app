@@ -14,7 +14,7 @@ function UserSignIn(props) {
     const email = useRef();
     const password = useRef();
     const { from } = props.location.state || { from: { pathname: '/' }};
-   console.log(props.location.state.from); //**** */
+    
     return (
         <React.Fragment>
             <Header />

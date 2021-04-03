@@ -33,7 +33,6 @@ function SignedIn(props) {
 }
 
 function SignedOut(props) {
-    // console.log(window.location)
     return (
         <React.Fragment>
             <ul className="header--signedout">

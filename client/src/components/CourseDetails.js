@@ -38,14 +38,6 @@ function CourseDetails(props) {
     }
 
 
-    // props.location.state = props.location.pathname;
-    const x = props.location.pathname; //state is being undefined so it's redirecting to / after signing in
-    // props.location.state.from = x; 
-    // console.log(props.location.state);
-    // console.log(props.location) //***** */
-
-
-
     return(
         <React.Fragment>
             {course ? 
