@@ -48,7 +48,7 @@ function CourseDetails(props) {
                         <div className="wrap">
                             {authenticatedUser && +authenticatedUser.id === ownerId ?
                                 <React.Fragment>
-                                    <Link to={`/update/${course.id}`} className="button">Update Course</Link>
+                                    <Link to={`/courses/${course.id}/update`} className="button">Update Course</Link>
                                     <button className="button" onClick={confirmDeletion}>Delete Course</button>
                                 </React.Fragment>
                                 :

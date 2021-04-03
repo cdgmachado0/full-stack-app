@@ -59,7 +59,7 @@ function UpdateCourse(props) {
                                         <input id="courseTitle" name="title" type="text" defaultValue={course.title} />
 
                                         <label htmlFor="courseAuthor">Course Author</label>
-                                        <input id="courseAuthor" name="courseAuthor" type="text" defaultValue={course.Student ? `${course.Student.firstName} ${course.Student.lastName}` : ''} />
+                                        <input id="courseAuthor" name="courseAuthor" type="text" defaultValue={course.Student ? `${course.Student.firstName} ${course.Student.lastName}` : ''} readOnly='readonly' />
 
                                         <label htmlFor="courseDescription">Course Description</label>
                                         <textarea id="courseDescription" name="description" defaultValue={course.description} />
@@ -69,7 +69,7 @@ function UpdateCourse(props) {
                                         <MaterialsNeeded materials={course.materialsNeeded ? revertMarkdown(course.materialsNeeded) : ''} />
                                     </div>
                                 </div>
-                                <button className="button" type="submit" onClick={(e) => actions.handleCourseUserInter(e, fullUrl, 'PUT')}>Update Course</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, path)}>Cancel</button>
+                                <button className="button" type="submit" onClick={(e) => actions.handleCourseUserInter(e, fullUrl, 'PUT', path)}>Update Course</button><button className="button button-secondary" onClick={(e) => actions.goBack(e, path)}>Cancel</button>
                             </form>
                         </div>
                     </main>

@@ -35,7 +35,7 @@ export function Provider(props) {
     }
     
 
-    const handleCourseUserInter = async (e, url, method) => {
+    const handleCourseUserInter = async (e, url, method, path) => {
         const setMarkdown = () => {
             return body.materialsNeeded
                 .match(/^.+$[\n\r]*/gm)
@@ -53,8 +53,10 @@ export function Provider(props) {
         body.isAuthenticated = true;
         
         const response = await api(url, method, body);
-        if (response.status === 201 || response.status === 204) {
+        if (response.status === 201 || ( response.status === 204 && method === 'DELETE' )) {
             window.location.href = '/';
+        } else if (response.status === 204) {
+            window.location.href = path;
         } else {
             const data = await response.json();
             setErrors(data.errors);
