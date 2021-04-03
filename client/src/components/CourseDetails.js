@@ -19,10 +19,14 @@ function CourseDetails(props) {
         actions.api(fullUrl)
             .then(res => res.json())
             .then(data => {
-                setDetails(data.course);
-                actions.setOwner(data.course.Student.id);
+                if (!data.message) {
+                    setDetails(data.course);
+                    actions.setOwner(data.course.Student.id);
+                } else {
+                    window.location.href = '/notfound';
+                }
             })
-    }, [actions, fullUrl]); 
+    }, [actions, fullUrl, props.location]); 
 
     const confirmDeletion = async () => {
         const choice = prompt("Type 'Y' to confirm");
@@ -32,6 +36,15 @@ function CourseDetails(props) {
             alert("Deletion cancelled or 'Y' wasn't typed");
         }
     }
+
+
+    // props.location.state = props.location.pathname;
+    const x = props.location.pathname; //state is being undefined so it's redirecting to / after signing in
+    // props.location.state.from = x; 
+    // console.log(props.location.state);
+    // console.log(props.location) //***** */
+
+
 
     return(
         <React.Fragment>

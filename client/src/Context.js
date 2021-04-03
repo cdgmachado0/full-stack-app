@@ -26,12 +26,8 @@ export function Provider(props) {
                 }
             };
 
-            
             const res = await fetch(url, options);
-            if (res) {
-                return res;
-            }
-            // return fetch(url, options);
+            if (res) {return res}
         } catch (err) {
             window.location.href = '/error';
         }
@@ -82,6 +78,7 @@ export function Provider(props) {
         window.location.href = path;
     }
 
+
     const signIn = (e, email, password, from) => {
         e.preventDefault();
         const encodedCredentials = btoa(`${email}:${password}`);
@@ -98,7 +95,12 @@ export function Provider(props) {
                 if (data.email) {
                     setAuth(data); 
                     Cookies.set('authenticatedUser', JSON.stringify(data), {expires: 1});
-                    window.location.href = from.pathname; 
+                    console.log(from);
+                    if (typeof from === 'object') {
+                        window.location.href = from.pathname;
+                    } else {
+                        window.location.href = from;
+                    }
                 } else {
                     setErrors(data);
                 }

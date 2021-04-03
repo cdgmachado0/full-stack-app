@@ -35,11 +35,6 @@ function UpdateCourse(props) {
     }, [actions, fullUrl]);
     
 
-
-
-
-
-
     const revertMarkdown = items => {
         const a = items.split('*');
         a.shift();

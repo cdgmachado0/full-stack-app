@@ -32,12 +32,16 @@ function SignedIn(props) {
     );
 }
 
-function SignedOut() {
+function SignedOut(props) {
+    // console.log(window.location)
     return (
         <React.Fragment>
             <ul className="header--signedout">
                 <li><Link to="/signup">Sign Up</Link></li>
-                <li><Link to="/signin">Sign In</Link></li>
+                <li><Link to={{
+                    pathname: '/signin',
+                    state: { from: window.location.pathname }
+                }}>Sign In</Link></li>
             </ul>
         </React.Fragment>
     );
