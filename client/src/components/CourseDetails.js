@@ -14,7 +14,6 @@ function CourseDetails(props) {
     const { actions, authenticatedUser, ownerId } = useContext(Context);
     const [ course, setDetails ] = useState({});
     const fullUrl = url + props.match.url;
-    const { id } = props.match.params;
     
     useEffect(() => {
         fetch(fullUrl)
@@ -31,7 +30,7 @@ function CourseDetails(props) {
         if (choice && choice.toLowerCase() === 'y') {
             await actions.setCourseDetails(null, fullUrl, 'DELETE');
         } else {
-            alert("Deletion cancelled or 'Y' wasn't typed ");
+            alert("Deletion cancelled or 'Y' wasn't typed");
         }
     }
    

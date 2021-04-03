@@ -53,17 +53,6 @@ export function Provider(props) {
     }
 
 
-    const createUser = (body) => {
-        const options = {
-            method: 'POST',
-            body,
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8'
-            }
-        };
-        return fetch(`${url}/users`, options);
-    }
-
     const getFormData = e => {
         e.preventDefault();
         const formData = new FormData(e.target.parentNode); 
@@ -115,7 +104,8 @@ export function Provider(props) {
         const body = getFormData(e);
         body.firstName = capitalizeFirstLetter(body.firstName);
         body.lastName = capitalizeFirstLetter(body.lastName);
-        createUser(JSON.stringify(body))
+
+        api(`${url}/users`, 'POST', body)
             .then(res => res.json())
             .then(data => {
                 if (data.errors) {
@@ -140,7 +130,6 @@ export function Provider(props) {
            signIn,
            signOut,
            setErrors,
-           createUser,
            signUp,
            setOwner,
            api,
