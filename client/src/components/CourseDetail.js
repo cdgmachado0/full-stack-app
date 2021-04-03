@@ -65,8 +65,7 @@ function CourseDetail(props) {
                                     <h3 className="course--detail--title">Course</h3>
                                     <h4 className="course--name">{course.title}</h4>
                                     <p>By { course.Student ? `${course.Student.firstName} ${course.Student.lastName}` : null }</p>
-
-                                    <p>{course.description}</p>  
+                                    {<ReactMarkdown source={course.description} />}
                                 </div>
                                 <div>
                                     {course.estimatedTime ? 

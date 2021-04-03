@@ -19,20 +19,22 @@ function UpdateCourse(props) {
     const fullUrl = url + '/courses/' + id;
     const path = `/courses/${id}`;
 
-    useEffect(() => {
+    useEffect(() => { //same as the useEffect of the CourseDetails
         let isMounted = true
         actions.api(fullUrl)
             .then(res => res.json())
             .then(data => {
-                if (isMounted) {
-                    actions.setOwner(data.course.Student.id);
+                if (!data.message && isMounted) {
                     setDetails(data.course);
+                    actions.setOwner(data.course.Student.id);
+                } else if (data.message) {
+                    window.location.href = '/notfound';
                 }
             });
         return () => {
             isMounted = false;
         }
-    }, [actions, fullUrl]);
+    }, [actions, fullUrl, authenticatedUser]);
     
 
     const revertMarkdown = items => {
