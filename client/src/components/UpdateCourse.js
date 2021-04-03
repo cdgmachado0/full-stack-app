@@ -14,22 +14,21 @@ import ErrorValidation from './ErrorValidation';
 
 function UpdateCourse(props) {
     const { actions, ownerId, authenticatedUser, errors } = useContext(Context);
-    const [ course, setDetails ] = useState({});
+    const [ course, setDetails ] = useState(null);
     const { id } = props.match.params;
     const fullUrl = url + '/courses/' + id;
     const path = `/courses/${id}`;
 
     useEffect(() => {
         let isMounted = true
-        fetch(fullUrl)
+        actions.api(fullUrl)
             .then(res => res.json())
             .then(data => {
                 if (isMounted) {
                     actions.setOwner(data.course.Student.id);
                     setDetails(data.course);
                 }
-            })
-            .catch(err => console.log(err));
+            });
         return () => {
             isMounted = false;
         }
@@ -51,7 +50,7 @@ function UpdateCourse(props) {
 
     return (
         <React.Fragment>
-            {!ownerId ? <div/> : authenticatedUser && +authenticatedUser.id === ownerId ?
+            {!course || !ownerId ? <div/> : authenticatedUser && +authenticatedUser.id === ownerId ?
                 <React.Fragment>
                     <Header />
                     <main>
