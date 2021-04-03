@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import url from './baseUrl';
 import Cookies from 'js-cookie';
-import { Redirect } from 'react-router-dom';
 
 export const Context = React.createContext();
 
