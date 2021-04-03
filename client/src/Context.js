@@ -33,8 +33,11 @@ export function Provider(props) {
                 .map((material, index) => index === 0 ? '* ' + material : material)
                 .join('* ');
         }
-        
-        const body = getFormData(e);
+
+        let body = {};
+        if (e) {
+            body = getFormData(e);
+        }
         if (body.materialsNeeded) {
             body.materialsNeeded = setMarkdown();
         }
@@ -49,18 +52,6 @@ export function Provider(props) {
         }
     }
 
-
-
-    const deleteCourse = (id, body) => {
-        const options = {
-            method: 'DELETE',
-            body,
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8'
-            }
-        }
-        fetch(`${url}/courses/${id}`, options);
-    }
 
     const createUser = (body) => {
         const options = {
@@ -146,7 +137,6 @@ export function Provider(props) {
         actions: {
            getFormData,
            goBack,
-           deleteCourse,
            signIn,
            signOut,
            setErrors,

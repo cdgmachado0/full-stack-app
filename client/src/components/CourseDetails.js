@@ -29,11 +29,7 @@ function CourseDetails(props) {
     const confirmDeletion = async () => {
         const choice = prompt("Type 'Y' to confirm");
         if (choice && choice.toLowerCase() === 'y') {
-            const body = {
-                isAuthenticated: true
-            };
-            await actions.deleteCourse(id, JSON.stringify(body));
-            window.location.href = '/';
+            await actions.setCourseDetails(null, fullUrl, 'DELETE');
         } else {
             alert("Deletion cancelled or 'Y' wasn't typed ");
         }
