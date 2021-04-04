@@ -16,10 +16,10 @@ function UpdateCourse(props) {
     const { actions, ownerId, authenticatedUser, errors } = useContext(Context);
     const [ course, setDetails ] = useState(null);
     const { id } = props.match.params;
-    const fullUrl = url + '/courses/' + id;
     const path = `/courses/${id}`;
+    const fullUrl = url + path;
 
-    useEffect(() => { //same as the useEffect of the CourseDetails
+    useEffect(() => { 
         let isMounted = true
         actions.api(fullUrl)
             .then(res => res.json())
@@ -34,7 +34,7 @@ function UpdateCourse(props) {
         return () => {
             isMounted = false;
         }
-    }, [actions, fullUrl, authenticatedUser]);
+    }, [actions, fullUrl]);
     
 
     const revertMarkdown = items => {
@@ -43,7 +43,6 @@ function UpdateCourse(props) {
         const noMark = a.map(elem => elem.trimStart());
         return noMark.join('');
     }
-
 
     return (
         <React.Fragment>

@@ -8,13 +8,9 @@ import { Context } from '../Context';
 
 function UserSignOut() {
     const { actions } = useContext(Context);
-    useEffect(() => {
-        actions.signOut();
-    });
+    useEffect(() => actions.signOut());
 
-    return (
-        <Redirect to='/' />
-    );
+    return (<Redirect to='/' />);
 }
 
 

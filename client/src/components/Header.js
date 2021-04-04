@@ -5,6 +5,7 @@ import { Context } from '../Context';
 
 function Header() {
     const { authenticatedUser } = useContext(Context);
+
     return (
         <React.Fragment>
             <header>
@@ -32,7 +33,7 @@ function SignedIn(props) {
     );
 }
 
-function SignedOut(props) {
+function SignedOut() {
     return (
         <React.Fragment>
             <ul className="header--signedout">

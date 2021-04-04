@@ -6,18 +6,17 @@ export const Context = React.createContext();
 
 
 export function Provider(props) {
-    
     const [ authenticatedUser, setAuth ] = useState(Cookies.getJSON('authenticatedUser') || null);
     const [ errors, setErrors ] = useState([]);
     const [ ownerId, setOwner ] = useState('');
 
-
-    const api = async (url, method = 'GET', _body) => {
+    const api = async (url, method = 'GET', _body, authCredentials) => {
         try {
             let body;
             if (_body) {
                 body = JSON.stringify(_body);
             }
+
             const options = {
                 method,
                 body,
@@ -26,6 +25,12 @@ export function Provider(props) {
                 }
             };
 
+            if (authCredentials) {
+                const { email, password } = authCredentials;
+                const encodedCredentials = btoa(`${email}:${password}`);
+                options.headers['Authorization'] = `Basic ${encodedCredentials}`;
+            }
+        
             const res = await fetch(url, options);
             if (res) {return res}
         } catch (err) {
@@ -64,40 +69,14 @@ export function Provider(props) {
     }
 
 
-    const getFormData = e => {
+    const signIn = (e, email, password, from) => { 
         e.preventDefault();
-        const formData = new FormData(e.target.parentNode); 
-        const body = {};
-    
-        for (let pair of formData.entries()) {
-            body[pair[0]] = pair[1];
-        }
-        return body;
-    }
-
-    const goBack = (e, path) => {
-        e.preventDefault();
-        window.location.href = path;
-    }
-
-
-    const signIn = (e, email, password, from) => { //keep it global
-        e.preventDefault();
-        const encodedCredentials = btoa(`${email}:${password}`);
-        const options = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-                'Authorization': `Basic ${encodedCredentials}`
-            }
-        };
-        fetch(`${url}/users`, options)
+        api(`${url}/users`, 'GET', null, { email, password })
             .then(res => res.json())
             .then(data => {
                 if (data.email) {
                     setAuth(data); 
                     Cookies.set('authenticatedUser', JSON.stringify(data), {expires: 1});
-                    console.log(from);
                     if (typeof from === 'object') {
                         window.location.href = from.pathname;
                     } else {
@@ -133,6 +112,22 @@ export function Provider(props) {
                     window.location.href = '/'; 
                 }
             });
+    }
+
+    const getFormData = e => {
+        e.preventDefault();
+        const formData = new FormData(e.target.parentNode); 
+        const body = {};
+    
+        for (let pair of formData.entries()) {
+            body[pair[0]] = pair[1];
+        }
+        return body;
+    }
+
+    const goBack = (e, path) => {
+        e.preventDefault();
+        window.location.href = path;
     }
 
     

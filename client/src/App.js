@@ -21,8 +21,6 @@ import UnhandledError from './components/UnhandledError';
 
 function App() {
   return (
-
-    //here is where all the routes will be
     <Router>
       <Switch>
         <Route exact path='/' component={Courses}/>
@@ -38,8 +36,6 @@ function App() {
         <Route render={() => <Redirect to='/notfound' />} />
       </Switch>
     </Router>
-    
-   
   );
 }
 
