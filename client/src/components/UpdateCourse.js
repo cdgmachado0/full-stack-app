@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom';
 import { Context } from '../Context';
 import url from '../baseUrl';
 
+//Components
 import Header from './Header';
 import ErrorValidation from './ErrorValidation';
 
@@ -36,7 +37,11 @@ function UpdateCourse(props) {
         }
     }, [actions, fullUrl]);
     
-
+    /**
+     * Reverts Markdown format for "Materials Needed" in order to give a more real UI when modifying.
+     * @param {string} items text from the "Materials Needed" section on each course
+     * @returns 
+     */
     const revertMarkdown = items => {
         const a = items.split('*');
         a.shift();

@@ -18,6 +18,10 @@ function Courses() {
             .then(data => setCourses(data.courses));
     }, [actions]);
 
+    /**
+     * Renders the list of courses
+     * @returns array of Course components
+     */
     const renderCourses = () => {
         return courses.map((course, index) => (
             <CourseTemplate 

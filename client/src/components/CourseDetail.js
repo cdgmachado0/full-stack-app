@@ -8,7 +8,10 @@ import ReactMarkdown from 'react-markdown';
 import { Context } from '../Context';
 import url from '../baseUrl';
 
+//Components
 import Header from './Header';
+
+
 
 function CourseDetail(props) {
     const { actions, authenticatedUser, ownerId } = useContext(Context);
@@ -28,6 +31,9 @@ function CourseDetail(props) {
             })
     }, [actions, fullUrl]); 
 
+    /**
+     * Confirms the deletion of the course and sends the request to the REST API.
+     */
     const confirmDeletion = async () => {
         const choice = prompt("Type 'Y' to confirm");
         if (choice && choice.toLowerCase() === 'y') {

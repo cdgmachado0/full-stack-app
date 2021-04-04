@@ -6,6 +6,7 @@ import {
   Switch
 } from 'react-router-dom';
 
+//Components
 import Courses from './components/Courses';
 import CourseDetail from './components/CourseDetail';
 import UpdateCourse from './components/UpdateCourse';
