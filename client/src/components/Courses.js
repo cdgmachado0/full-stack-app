@@ -14,7 +14,13 @@ function Courses() {
     
     useEffect(() => {
         actions.api(`${url}/courses`)
-            .then(res => res.json())
+            .then(res => {
+                if (res.status !== 500) {
+                    return res.json();
+                } else {
+                    window.location.href = '/error';
+                }
+            })
             .then(data => setCourses(data.courses));
     }, [actions]);
 
